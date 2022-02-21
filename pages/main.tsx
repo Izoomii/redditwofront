@@ -1,4 +1,5 @@
 import React from "react";
+import { Header } from "../components/header";
 
 interface Post {
   id: number;
@@ -14,6 +15,7 @@ interface Post {
 
 interface shownPost {
   title: string;
+  authorName: string;
   content: string;
 }
 
@@ -43,7 +45,11 @@ export default function MainPage() {
         console.log(data);
         for (let i = 0; i < data.length; i++) {
           setContent((prev) => [
-            { title: data[i].title, content: data[i].content },
+            {
+              title: data[i].title,
+              authorName: data[i].authorName,
+              content: data[i].content,
+            },
             ...prev,
           ]);
         }
@@ -58,35 +64,7 @@ export default function MainPage() {
       >
         Button
       </button>
-      <div id="header" className="bg-blue-400 w-100 h-10 flex ">
-        <div className="flex w-1/4 h-100 justify-around">
-          <div className="grid place-items-center text-xl font-bold hover:text-2xl hover:text-blue-900 transition-all ease-linear duration-75">
-            RedditTwo
-          </div>
-          <div className="grid place-items-center">
-            <a href="#">Link 1</a>
-          </div>
-          <div className="grid place-items-center">
-            <a href="#">Link 2</a>
-          </div>
-        </div>
-        <div className="flex h-100 w-2/4 p-1">
-          <input className="w-3/4 h-100" />
-          <button type="submit" className="w-1/5 h-100 bg-gray-300 ml-1">
-            Search
-          </button>
-        </div>
-        <div className="flex h-100 w-1/4 justify-end place-items-center">
-          <h3>Yeaaah dude your profile here or whatever</h3>
-
-          <div className="w-10 h-10">
-            <img
-              src="/avatar icon.jpg"
-              className="object-contain rounded-full"
-            />
-          </div>
-        </div>
-      </div>
+      <Header />
       <div id="main" className="bg-gray-700 flex-grow p-5">
         <div className="flex h-full w-full">
           <div className="flex-col w-9/12 h-full bg-gray-800 text-white p-5">
@@ -98,6 +76,9 @@ export default function MainPage() {
                 >
                   <h1 className="text-2xl text-blue-400 text-center">
                     {e.title}
+                  </h1>
+                  <h1 className="text-xl text-blue-300 text-center">
+                    <i>by {e.authorName}</i>
                   </h1>
                   <p className="text-center">{e.content}</p>
                 </div>

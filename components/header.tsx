@@ -1,4 +1,27 @@
+import React from "react";
+
+interface searchResults {
+  words: string;
+}
+
 export const Header = () => {
+  const [search, setSearch] = React.useState("");
+
+  const searchQuery = () => {
+    let data = { words: search };
+    fetch("http://localhost:8080/searchposts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data: Array<searchResults>) => {
+        console.log("Sent this, or got it idk: ", data);
+      });
+  };
+
   return (
     <div id="header" className="bg-blue-400 w-100 h-10 flex ">
       <div className="flex w-1/4 h-100 justify-around">
@@ -13,8 +36,20 @@ export const Header = () => {
         </div>
       </div>
       <div className="flex h-100 w-2/4 p-1">
-        <input className="w-3/4 h-100" />
-        <button type="submit" className="w-1/5 h-100 bg-gray-300 ml-1">
+        <input
+          className="w-3/4 h-100"
+          name="searchQuery"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            searchQuery();
+          }}
+          className="w-1/5 h-100 bg-gray-300 ml-1"
+        >
           Search
         </button>
       </div>

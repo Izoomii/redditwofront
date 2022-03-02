@@ -1,5 +1,6 @@
 import React from "react";
 import { Header } from "../components/header";
+import { backPort } from "../globalVars/globals";
 
 interface Post {
   id: number;
@@ -39,7 +40,7 @@ model Post {
 export default function MainPage() {
   const [content, setContent] = React.useState<shownPost[]>([]);
   function clickAss() {
-    fetch("http://localhost:8080/main")
+    fetch(`http://localhost:${backPort}/main`)
       .then((response) => response.json())
       .then((data: Array<Post>) => {
         console.log(data);
@@ -56,6 +57,12 @@ export default function MainPage() {
       });
   }
 
+  //remember func should only work one way, only when scrolling down and past 'limit', goodnight me, and goodmorning future me. hope i do well
+  if (typeof window !== "undefined") {
+    document.addEventListener("scroll", () => {
+      console.log(window.scrollY / 100);
+    });
+  }
   return (
     <div className="flex flex-col h-screen w-full">
       <button

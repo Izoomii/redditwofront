@@ -1,5 +1,6 @@
 import React from "react";
 import { Header } from "../components/header";
+import { backPort } from "../globalVars/globals";
 
 interface updateMessage {
   message: string;
@@ -17,7 +18,7 @@ export default function Createpost() {
     let data = { authorName: user, sub, title, content };
     if (title == "") return setUpdate("No title given.");
     if (sub == "") return setUpdate("No sub given.");
-    await fetch("http://localhost:8080/createpost", {
+    await fetch(`http://localhost:${backPort}/createpost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React from "react";
 import { Header } from "../components/header";
+import { backPort } from "../globalVars/globals";
 
 /*
 model User {
@@ -34,7 +35,7 @@ export default function Accounts() {
     if (user == "") {
       setNicknameCheck("Please fill the nickname section.");
     } else {
-      fetch(`http://localhost:8080/auth/${user}`)
+      fetch(`http://localhost:${backPort}/auth/${user}`)
         .then((response) => response.json())
         .then((data: User) => {
           if (data.nickname === user) {
@@ -47,7 +48,7 @@ export default function Accounts() {
   };
 
   const catchError = () => {
-    fetch(`http://localhost:8080/auth/login`, {
+    fetch(`http://localhost:${backPort}/auth/login`, {
       method: "POST",
       body: JSON.stringify({ nickname: user, password }),
     })
@@ -74,7 +75,7 @@ export default function Accounts() {
             <div className="w-fit p-2 ">
               <form
                 className="bg-white p-2"
-                action="http://localhost:8080/auth/login"
+                action={`http://localhost:${backPort}/auth/login`}
                 method="POST"
                 style={{ border: "1px solid black" }}
               >

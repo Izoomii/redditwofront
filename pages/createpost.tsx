@@ -6,7 +6,7 @@ interface updateMessage {
   message: string;
 }
 
-export default function Createpost() {
+export default function CreatePost() {
   const [user, setUser] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [sub, setSub] = React.useState("");

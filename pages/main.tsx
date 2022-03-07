@@ -20,23 +20,6 @@ interface shownPost {
   content: string;
 }
 
-/*
-
-model Post {
-  id          Int       @id @default(autoincrement())
-  sub         String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  title       String    @db.VarChar(255)
-  content     String?
-  published   Boolean   @default(false)
-  author      User      @relation(fields: [authorName], references: [nickname])
-  authorName  String    // relation scalar field  (used in the `@relation` attribute above)
-  
-}
-
-*/
-
 export default function MainPage() {
   const [content, setContent] = React.useState<shownPost[]>([]);
   function clickAss() {

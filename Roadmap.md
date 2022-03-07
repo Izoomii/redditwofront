@@ -1,0 +1,6 @@
+- Embed images in posts
+- Create profiles
+- Create saved posts.
+- Create upvotes.
+- Create comments
+- Customize profiles (with avatars)

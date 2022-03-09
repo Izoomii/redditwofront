@@ -1,5 +1,6 @@
 import React from "react";
 import { backPort } from "../../globalVars/globals";
+import { Header } from "../../components/header";
 
 interface Post {
   id: number;
@@ -25,16 +26,26 @@ interface idList {
 
 function PostPage(data: postProp) {
   const postInfo = data.data.post;
-  console.log(postInfo);
+  // console.log(postInfo);
 
   return (
-    <div className="w-full bg-gray-900 text-white h-screen">
-      <div>
-        <p>id params is {}</p>
-        <div>
-          Post: {postInfo.title} by {postInfo.authorName}
-          <br />
-          Content: {postInfo.content}
+    <div className="w-full bg-gray-900 flex flex-col h-screen">
+      <Header></Header>
+      <div className="w-full grow flex flex-col">
+        <div className="bg-gray-700 m-3 p-4 grow flex">
+          <div className="w-3/4 bg-gray-600">
+            <div id="postHead" className="p-5">
+              <h1 className="italic">
+                r/{postInfo.sub} · {postInfo.authorName}
+              </h1>
+              <h1 className="text-3xl">{postInfo.title}</h1>
+            </div>
+            <div id="postBody" className=" p-5 flex flex-col items-center">
+              <div className="border-2 border-gray-900 w-full p-3">
+                <p>{postInfo.content}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

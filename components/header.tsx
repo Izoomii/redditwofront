@@ -25,14 +25,14 @@ export const Header = () => {
   return (
     <div id="header" className="bg-blue-400 w-100 h-10 flex ">
       <div className="flex w-1/4 h-100 justify-around">
-        <div className="grid place-items-center text-xl font-bold hover:text-2xl hover:text-blue-900 transition-all ease-linear duration-75">
+        <div className="grid place-items-center text-xl font-bold hover:text-blue-800 transition-all ease-linear duration-100">
           <a href="/main">RedditTwo</a>
         </div>
         <div className="grid place-items-center">
           <a href="createpost">Create Post</a>
         </div>
         <div className="grid place-items-center">
-          <a href="#">Link 2</a>
+          <a href="/login">Login</a>
         </div>
       </div>
       <div className="flex h-100 w-2/4 p-1">
@@ -57,7 +57,7 @@ export const Header = () => {
         <h3>Yeaaah dude your profile here or whatever</h3>
 
         <div className="w-10 h-10">
-          IMG
+          AVT
           <br />
           HERE
           {/* <img src="avatar icon.jpg" className="object-contain rounded-full" /> */}

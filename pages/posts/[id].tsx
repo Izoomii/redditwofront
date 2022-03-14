@@ -1,18 +1,7 @@
 import React from "react";
-import { backPort } from "../../globalVars/globals";
+import { backPort, Post } from "../../globalVars/globals";
 import { Header } from "../../components/header";
-
-interface Post {
-  id: number;
-  sub: string;
-  createdAt: Date;
-  updatedAt: Date;
-  title: string;
-  content: string;
-  published: boolean;
-  author: string; //is actually "User", which is another model
-  authorName: string;
-}
+import path from "path";
 
 interface postProp {
   data: {
@@ -66,11 +55,11 @@ export async function getStaticPaths() {
   };
 }
 
+//improve this
 export async function getStaticProps(props: any) {
   const id = props.params.id;
   const res = await fetch(`http://localhost:${backPort}/posts/${id}`);
   const data = await res.json();
-  // console.log(data);
 
   return {
     props: { data },

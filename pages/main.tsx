@@ -20,8 +20,9 @@ interface postsProp {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`http://localhost:${backPort}/main`);
+  const res = await fetch(`http://localhost:${backPort}/posts/all`);
   const data = await res.json();
+  // console.log(data);
   return {
     props: { data },
   };
@@ -29,8 +30,10 @@ export async function getStaticProps() {
 
 function MainPage(props: postsProp) {
   let posts = props.data;
-  const clickAss = () => {
-    console.log("clicked the button!");
+  const clickAss = async () => {
+    const res = await fetch(`http://localhost:${backPort}/main`);
+    const data = await res.json();
+    // console.log(data);
   };
 
   //remember func should only work one way, only when scrolling down and past 'limit', goodnight me, and goodmorning future me. hope i do well
@@ -55,12 +58,8 @@ function MainPage(props: postsProp) {
           <div className="flex-col w-9/12 h-full bg-gray-800 text-white p-5">
             {posts.map((e, i) => {
               return (
-                <Link href={`/posts/${e.id}`}>
-                  <div
-                    onClick={() => {}}
-                    key={i}
-                    className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear"
-                  >
+                <Link key={i} href={`/posts/${e.id}`}>
+                  <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear">
                     <h1 className="text-2xl text-blue-400 text-center">
                       {e.title}
                     </h1>

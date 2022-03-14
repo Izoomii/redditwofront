@@ -1,17 +1,7 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { Header } from "../components/header";
 import { backPort } from "../globalVars/globals";
-
-/*
-model User {
-  //id      Int     @id @default(autoincrement())
-  email     String  @unique
-  nickname  String  @unique
-  password  String
-  name      String?
-  post      Post[]
-}
-*/
 
 interface User {
   id: number;
@@ -22,39 +12,50 @@ interface User {
   post: string;
 }
 
-interface errMessage {
-  info: string;
+interface authRes {
+  authenticate: Boolean;
+  message: string;
 }
 
-export default function Accounts() {
-  const [user, setUser] = React.useState("");
+export default function Login() {
+  const router = useRouter();
+
+  const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [nicknameCheck, setNicknameCheck] = React.useState("");
+  const [accountCheck, setAccountCheck] = React.useState("");
 
   const checkUser = () => {
-    if (user == "") {
-      setNicknameCheck("Please fill the nickname section.");
+    if (nickname == "") {
+      setAccountCheck("Please fill the nickname section.");
     } else {
-      fetch(`http://localhost:${backPort}/auth/${user}`)
+      fetch(`http://localhost:${backPort}/auth/${nickname}`)
         .then((response) => response.json())
         .then((data: User) => {
-          if (data.nickname === user) {
-            setNicknameCheck(`${user} exists!`);
+          if (data.nickname === nickname) {
+            setAccountCheck(`${nickname} exists!`);
           } else {
-            setNicknameCheck(`${user} does not exist.`);
+            setAccountCheck(`${nickname} does not exist.`);
           }
         });
     }
   };
 
-  const catchError = () => {
+  const loginUser = async () => {
     fetch(`http://localhost:${backPort}/auth/login`, {
       method: "POST",
-      body: JSON.stringify({ nickname: user, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nickname, password }),
     })
       .then((response) => response.json())
-      .then((message: errMessage) => {
-        setNicknameCheck(message.info);
+      .then((data: authRes) => {
+        if (data.authenticate == false) {
+          setAccountCheck(data.message);
+        } else {
+          //need to actually remember the user with cookies and shit bruh
+          router.push("/main");
+        }
       });
   };
 
@@ -84,14 +85,13 @@ export default function Accounts() {
                   <input
                     className="m-2 mt-0"
                     name="nickname"
-                    type="text"
-                    value={user}
+                    value={nickname}
                     placeholder="Nickname"
                     onFocus={() => {
-                      setNicknameCheck("");
+                      setAccountCheck("");
                     }}
                     onChange={(event) => {
-                      setUser(event.target.value);
+                      setNickname(event.target.value);
                     }}
                   />
                 </label>
@@ -114,17 +114,17 @@ export default function Accounts() {
                 </label>
                 <br />
                 <button
-                  type="submit"
+                  type="button"
                   className="bg-blue-300 w-full hover:bg-blue-400"
                   onClick={() => {
-                    // catchError();
+                    loginUser();
                   }}
                 >
                   Connect
                 </button>
               </form>
               <div className="fixed bottom-0 m-2 bg-gray-800 text-white">
-                <p>{nicknameCheck}</p>
+                <p>{accountCheck}</p>
               </div>
             </div>
           </div>

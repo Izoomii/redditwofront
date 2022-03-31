@@ -1,6 +1,7 @@
+import axios from "axios";
 import Link from "next/link";
 import React from "react";
-import { Header } from "../../components/header";
+import { Header } from "../../components/Header";
 import { backPort, Post } from "../../globalVars/globals";
 
 interface nicknameList {
@@ -42,24 +43,37 @@ function Account(props: nicknameProps) {
 }
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`http://localhost:${backPort}/users`);
-  const data: Promise<nicknameList[]> = await res.json();
-  const paths = (await data).map((elem) => {
-    return {
-      params: { nickname: elem.nickname.toString() },
-    };
-  });
-  // console.log(paths);
+  const getUsers = async () => {
+    const users: Promise<nicknameList[]> = axios
+      .get(`http://localhost:${backPort}/users/all`)
+      .then(({ data }) => {
+        return data;
+      });
+    const paths = (await users).map((elem) => {
+      return {
+        params: { nickname: elem.nickname.toString() },
+      };
+    });
+    return paths;
+  };
+
   return {
-    paths: paths,
+    paths: await getUsers(),
     fallback: false,
   };
 };
 
 export const getStaticProps = async (props: any) => {
   const nickname = props.params.nickname;
-  const res = await fetch(`http://localhost:${backPort}/users/${nickname}`);
-  const data = await res.json();
+  const data = await axios
+    .get(`http://localhost:${backPort}/users/`, {
+      params: {
+        user: nickname,
+      },
+    })
+    .then(({ data }) => {
+      return data;
+    });
   return {
     props: { data },
   };

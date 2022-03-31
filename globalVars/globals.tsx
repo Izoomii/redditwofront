@@ -11,3 +11,20 @@ export interface Post {
   author: string; //is actually "User", which is another model
   authorName: string;
 }
+
+export interface User {
+  email: string;
+  nickname: string;
+  password: string;
+  name?: string;
+  post: Post;
+}
+
+// model User {
+//   //id      Int     @id @default(autoincrement())
+//   email     String  @unique
+//   nickname  String  @unique
+//   password  String
+//   name      String?
+//   post      Post[]
+// }

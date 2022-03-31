@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import React from "react";
-import { Header } from "../components/header";
+import { Header } from "../components/Header";
 import { backPort } from "../globalVars/globals";
 
 interface User {
@@ -28,9 +29,9 @@ export default function Login() {
     if (nickname == "") {
       setAccountCheck("Please fill the nickname section.");
     } else {
-      fetch(`http://localhost:${backPort}/auth/${nickname}`)
-        .then((response) => response.json())
-        .then((data: User) => {
+      axios
+        .get<User>(`http://localhost:${backPort}/auth/${nickname}`)
+        .then(({ data }) => {
           if (data.nickname === nickname) {
             setAccountCheck(`${nickname} exists!`);
           } else {
@@ -41,20 +42,25 @@ export default function Login() {
   };
 
   const loginUser = async () => {
-    fetch(`http://localhost:${backPort}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nickname, password }),
-    })
-      .then((response) => response.json())
-      .then((data: authRes) => {
+    axios
+      .post<authRes>(
+        `http://localhost:${backPort}/auth/login`,
+        JSON.stringify({ nickname, password }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      // data has any type, works, but should be fixed when possible
+      .then(({ data }) => {
         if (data.authenticate == false) {
           setAccountCheck(data.message);
         } else {
           //need to actually remember the user with cookies and shit bruh
-          router.push("/main");
+          router.push("/");
+          console.log(data);
         }
       });
   };

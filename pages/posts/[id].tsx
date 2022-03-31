@@ -1,6 +1,6 @@
 import React from "react";
 import { backPort, Post } from "../../globalVars/globals";
-import { Header } from "../../components/header";
+import { Header } from "../../components/Header";
 import path from "path";
 
 interface postProp {

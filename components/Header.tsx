@@ -1,4 +1,7 @@
+import axios from "axios";
+import Link from "next/link";
 import React from "react";
+import { backPort } from "../globalVars/globals";
 
 interface searchResults {
   words: string;
@@ -6,6 +9,7 @@ interface searchResults {
 
 export const Header = () => {
   const [search, setSearch] = React.useState("");
+  const [avatar, setAvatar] = React.useState("");
 
   const searchQuery = () => {
     let data = { words: search };
@@ -22,14 +26,26 @@ export const Header = () => {
       });
   };
 
+  axios
+    .get(`http://localhost:${backPort}/users/verifyme`, {
+      withCredentials: true,
+    })
+    .then(({ data }) => {
+      if (!data.user) {
+        setAvatar("NOAV");
+      } else {
+        setAvatar(data.user);
+      }
+    });
+
   return (
     <div id="header" className="bg-blue-400 w-100 h-10 flex ">
       <div className="flex w-1/4 h-100 justify-around">
         <div className="grid place-items-center text-xl font-bold hover:text-blue-800 transition-all ease-linear duration-100">
-          <a href="/main">RedditTwo</a>
+          <a href="/">RedditTwo</a>
         </div>
         <div className="grid place-items-center">
-          <a href="createpost">Create Post</a>
+          <a href="/createpost">Create Post</a>
         </div>
         <div className="grid place-items-center">
           <a href="/login">Login</a>
@@ -54,12 +70,9 @@ export const Header = () => {
         </button>
       </div>
       <div className="flex h-100 w-1/4 justify-end place-items-center">
-        <h3>Yeaaah dude your profile here or whatever</h3>
-
-        <div className="w-10 h-10">
-          AVT
-          <br />
-          HERE
+        <h3>profile here or whatever</h3>
+        <div className="h-10 w-20 text-center">
+          <Link href={`/settings`}>{avatar}</Link>
           {/* <img src="avatar icon.jpg" className="object-contain rounded-full" /> */}
         </div>
       </div>

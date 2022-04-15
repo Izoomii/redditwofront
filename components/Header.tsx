@@ -1,5 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { backPort } from "../globalVars/globals";
 
@@ -8,22 +9,13 @@ interface searchResults {
 }
 
 export const Header = () => {
+  const router = useRouter();
   const [search, setSearch] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
 
   const searchQuery = () => {
-    let data = { words: search };
-    fetch("http://localhost:8080/searchposts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data: Array<searchResults>) => {
-        console.log("Sent this, or got it idk: ", data);
-      });
+    // if (window.location.pathname === "/search") router.reload();
+    router.push(`/search?query=${search}`);
   };
 
   axios

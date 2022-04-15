@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React from "react";
 import { Header } from "../components/Header";
+import { Page } from "../components/Page";
 import { backPort } from "../globalVars/globals";
 
 interface User {
@@ -58,7 +59,6 @@ export default function Login() {
         if (data.authenticate == false) {
           setAccountCheck(data.message);
         } else {
-          //need to actually remember the user with cookies and shit bruh
           router.push("/");
           console.log(data);
         }
@@ -67,15 +67,7 @@ export default function Login() {
 
   return (
     <div>
-      <div className="h-screen w-full flex flex-col">
-        <button
-          className="fixed right-0 top-1/2 w-20 h-10 bg-blue-500 hover:bg-blue-700"
-          onClick={() => {
-            console.log("Clicked. :)");
-          }}
-        >
-          Click me
-        </button>
+      <Page>
         <Header />
         <div className="flex w-full flex-grow bg-gray-800 items-center justify-center">
           <div className="flex w-1/4 h-1/4 focus-within:h-1/3 hover:w-1/3 bg-gray-700 justify-center items-center transition-all ease-in-out duration-300">
@@ -135,7 +127,7 @@ export default function Login() {
             </div>
           </div>
         </div>
-      </div>
+      </Page>
     </div>
   );
 }

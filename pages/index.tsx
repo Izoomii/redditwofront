@@ -6,6 +6,7 @@ import { Main } from "../components/Main";
 import { Container } from "../components/Container";
 import { PostComponent } from "../components/PostComponent";
 import { backPort, Post } from "../globalVars/globals";
+import Vote from "../components/Vote";
 
 interface postsProp {
   data: Post[];
@@ -46,6 +47,7 @@ function IndexPage(props: postsProp) {
               return (
                 <div key={i}>
                   <PostComponent post={e} />
+                  <Vote post={e} />
                 </div>
               );
             })}

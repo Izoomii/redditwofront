@@ -1,7 +1,7 @@
 import React from "react";
-import { backPort, Post } from "../../globalVars/globals";
+import { backPort, Post, VoteType } from "../../globalVars/globals";
 import { Header } from "../../components/Header";
-import path from "path";
+import Vote from "../../components/Vote";
 
 interface postProp {
   data: {
@@ -10,12 +10,11 @@ interface postProp {
 }
 
 interface idList {
-  id: number;
+  id: string;
 }
 
 function PostPage(data: postProp) {
-  const postInfo = data.data.post;
-  // console.log(postInfo);
+  const post = data.data.post;
 
   return (
     <div className="w-full bg-gray-900 flex flex-col h-screen">
@@ -25,15 +24,17 @@ function PostPage(data: postProp) {
           <div className="w-3/4 bg-gray-600">
             <div id="postHead" className="p-5">
               <h1 className="italic">
-                r/{postInfo.sub} · {postInfo.authorName}
+                r/{post.sub} · {post.authorName}
               </h1>
-              <h1 className="text-3xl">{postInfo.title}</h1>
+              <h1 className="text-3xl">{post.title}</h1>
             </div>
             <div id="postBody" className=" p-5 flex flex-col items-center">
               <div className="border-2 border-gray-900 w-full p-3">
-                <p>{postInfo.content}</p>
+                <p>{post.content}</p>
               </div>
             </div>
+            {/* {VOTE HERE} */}
+            <Vote post={post} />
           </div>
         </div>
       </div>
@@ -46,7 +47,7 @@ export async function getStaticPaths() {
   const data: Promise<idList[]> = results.json();
   const paths = (await data).map((elem) => {
     return {
-      params: { id: elem.id.toString() },
+      params: { id: elem.id.toString() }, //CHNL
     };
   });
   return {

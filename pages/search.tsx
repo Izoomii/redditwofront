@@ -11,6 +11,7 @@ export function Search() {
   const [executeOnce, setExecuteOnce] = React.useState(true);
   //for some reason this request is made like 4 times, but it works, probably just a nextjs thing, IMPL
 
+  //CHNL employ useEffect instead
   const fetchQuery = () => {
     // dont know if this is the right way to go about things but if it costs one boolean const for it to work then sure /shrug
     if (!executeOnce) return;

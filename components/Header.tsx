@@ -1,12 +1,12 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { backPort } from "../globalVars/globals";
 
-interface searchResults {
-  words: string;
-}
+// interface searchResults {
+//   words: string;
+// }
 
 export const Header = () => {
   const router = useRouter();
@@ -18,17 +18,19 @@ export const Header = () => {
     router.push(`/search?query=${search}`);
   };
 
-  axios
-    .get(`http://localhost:${backPort}/users/verifyme`, {
-      withCredentials: true,
-    })
-    .then(({ data }) => {
-      if (!data.user) {
-        setAvatar("NOAV");
-      } else {
-        setAvatar(data.user);
-      }
-    });
+  useEffect(() => {
+    axios
+      .get(`http://localhost:${backPort}/users/verifyme`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        if (!data.user) {
+          setAvatar("NOAV");
+        } else {
+          setAvatar(data.user);
+        }
+      });
+  }, []);
 
   return (
     <div id="header" className="bg-blue-400 w-100 h-10 flex ">

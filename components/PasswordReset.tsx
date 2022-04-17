@@ -1,4 +1,5 @@
 import axios from "axios";
+import Router from "next/router";
 import React from "react";
 import { backPort } from "../globalVars/globals";
 
@@ -22,7 +23,6 @@ export default function PasswordReset() {
   const verifyPasswordStrength = () => {
     const check = new RegExp(
       "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
-      // "^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$"
     );
     return check.test(newPw);
   };
@@ -32,6 +32,9 @@ export default function PasswordReset() {
       setAlert(
         "Password must be a combination of at least 8 lowercase and uppercase letters, digits and special characters."
       );
+      return;
+    } else if (originalPw === newPw) {
+      setAlert("You cannot set the same password.");
       return;
     }
     setAlert("");
@@ -48,7 +51,8 @@ export default function PasswordReset() {
         }
       )
       .then(({ data }) => {
-        console.log(data);
+        if (!data.passwordChanged) return setAlert("An error occurred");
+        Router.push("/login");
       });
   };
 

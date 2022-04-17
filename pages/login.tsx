@@ -6,7 +6,7 @@ import { Page } from "../components/Page";
 import { backPort } from "../globalVars/globals";
 
 interface User {
-  id: number;
+  id: string;
   email: string;
   nickname: string;
   password: string;

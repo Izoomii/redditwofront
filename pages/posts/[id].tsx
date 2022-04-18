@@ -56,7 +56,7 @@ export async function getStaticPaths() {
   };
 }
 
-//improve this
+//improve this IMPL
 export async function getStaticProps(props: any) {
   const id = props.params.id;
   const res = await fetch(`http://localhost:${backPort}/posts/${id}`);

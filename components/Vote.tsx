@@ -35,34 +35,32 @@ export default function Vote(props: any) {
       axios
         .get(`http://localhost:${backPort}/posts/${post.id}/votecount`)
         .then(({ data }: AxiosResponse<voteCount>) => {
-          setVotes(`Votes: ${data.total} -> ${data.upvotes}/${data.downvotes}`);
+          setVotes(`[${data.total}] -> +${data.upvotes}/-${data.downvotes}`);
         });
     } else {
-      setVotes("Votes Disabled");
+      setVotes("Vote");
     }
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center">
+      <button
+        className="bg-blue-500 hover:bg-blue-700 w-full rounded-full m-2 p-1"
+        onClick={() => {
+          sendVote("UP");
+        }}
+      >
+        Up
+      </button>
       <h1 className="text-center text-gray-500">{votes}</h1>
-      <div className="flex p-1 justify-center">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 m-2 w-1/3"
-          onClick={() => {
-            sendVote("UP");
-          }}
-        >
-          Upvote
-        </button>
-        <button
-          className="bg-blue-400 hover:bg-blue-600 m-2 w-1/3"
-          onClick={() => {
-            sendVote("DOWN");
-          }}
-        >
-          Downvote
-        </button>
-      </div>
+      <button
+        className="bg-blue-400 hover:bg-blue-600 w-full rounded-full m-2 p-1"
+        onClick={() => {
+          sendVote("DOWN");
+        }}
+      >
+        Down
+      </button>
     </div>
   );
 }

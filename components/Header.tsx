@@ -2,7 +2,8 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { backPort } from "../globalVars/globals";
+import { backPort, User } from "../globalVars/globals";
+import Avatar from "./Avatar";
 
 // interface searchResults {
 //   words: string;
@@ -11,10 +12,11 @@ import { backPort } from "../globalVars/globals";
 export const Header = () => {
   const router = useRouter();
   const [search, setSearch] = React.useState("");
-  const [avatar, setAvatar] = React.useState("");
+  //could merge nickname and avatar into user but it's not much, IMPL
+  const [nickname, setNickname] = React.useState("");
+  const [avatar, setAvatar] = React.useState<string | null>(null);
 
   const searchQuery = () => {
-    // if (window.location.pathname === "/search") router.reload();
     router.push(`/search?query=${search}`);
   };
 
@@ -24,11 +26,10 @@ export const Header = () => {
         withCredentials: true,
       })
       .then(({ data }) => {
-        if (!data.user) {
-          setAvatar("NOAV");
-        } else {
-          setAvatar(data.user);
-        }
+        const user = data.user as User;
+        if (!user) return setAvatar(null), setNickname("No user logged in");
+        setNickname(user.nickname);
+        setAvatar(user.avatar as string | null);
       });
   }, []);
 
@@ -63,11 +64,16 @@ export const Header = () => {
           Search
         </button>
       </div>
-      <div className="flex h-100 w-1/4 justify-end place-items-center">
-        <h3>profile here or whatever</h3>
-        <div className="h-10 w-20 text-center">
-          <Link href={`/settings`}>{avatar}</Link>
-          {/* <img src="avatar icon.jpg" className="object-contain rounded-full" /> */}
+      <div className="flex h-100 w-1/4 justify-end">
+        <div className="grow text-center flex flex-col justify-center">
+          <Link href={`/users/${nickname}`}>{nickname}</Link>
+        </div>
+        <div className="h-10 w-fit rounded-full hover:bg-blue-600 ease-in transition-all duration-100 p-1">
+          <Link href={`/settings`}>
+            <div className="w-full h-full">
+              <Avatar avatar={avatar} />
+            </div>
+          </Link>
         </div>
       </div>
     </div>

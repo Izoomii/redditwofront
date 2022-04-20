@@ -43,7 +43,7 @@ function PostPage(data: postProp) {
 }
 
 export async function getStaticPaths() {
-  const results = await fetch(`http://localhost:${backPort}/posts`);
+  const results = await fetch(`http://localhost:${backPort}/posts`); //CHNL
   const data: Promise<idList[]> = results.json();
   const paths = (await data).map((elem) => {
     return {
@@ -59,7 +59,7 @@ export async function getStaticPaths() {
 //improve this IMPL
 export async function getStaticProps(props: any) {
   const id = props.params.id;
-  const res = await fetch(`http://localhost:${backPort}/posts/${id}`);
+  const res = await fetch(`http://localhost:${backPort}/posts/${id}`); //CHNL
   const data = await res.json();
 
   return {

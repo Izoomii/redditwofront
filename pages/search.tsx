@@ -1,51 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../components/Header";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { backPort } from "../globalVars/globals";
 import { Post } from "../globalVars/globals";
+import { PostComponent } from "../components/PostComponent";
+import { Main } from "../components/Main";
+import { Container } from "../components/Container";
+import { Page } from "../components/Page";
 
 export function Search() {
   const router = useRouter();
-  const [results, setResults] = React.useState<Post[]>([]);
-  const [executeOnce, setExecuteOnce] = React.useState(true);
-  //for some reason this request is made like 4 times, but it works, probably just a nextjs thing, IMPL
+  const [posts, setPosts] = React.useState<Post[]>([]);
 
-  //CHNL employ useEffect instead
-  const fetchQuery = () => {
-    // dont know if this is the right way to go about things but if it costs one boolean const for it to work then sure /shrug
-    if (!executeOnce) return;
-    setExecuteOnce(false);
-    const query = router.query;
+  //IMPL, handle 400 Bad Request status that's sent when query is empty
+  const query = router.query;
+  useEffect(() => {
     axios
       .get(`http://localhost:${backPort}/search`, {
         params: query,
       })
       .then(({ data }) => {
         console.log(data);
-        setResults(data);
+        setPosts(data);
       });
-  };
-
-  if (router.isReady) {
-    fetchQuery();
-  }
+  }, [query]);
 
   return (
-    <div>
+    <Page>
       <Header />
-      <div>
-        {results.map((e, i) => {
-          return (
-            <div key={i}>
-              {e.authorName}
-              <br />
-              {e.content}
-            </div>
-          );
-        })}
-      </div>
-    </div>
+      <Container>
+        <Main>
+          <div>
+            {posts.map((e, i) => {
+              return (
+                <div key={i}>
+                  <PostComponent post={e} withVotes={true} />
+                </div>
+              );
+            })}
+          </div>
+        </Main>
+      </Container>
+    </Page>
   );
 }
 

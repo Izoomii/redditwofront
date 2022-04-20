@@ -1,57 +1,54 @@
 import axios from "axios";
 import Link from "next/link";
 import React from "react";
+import { Container } from "../../components/Container";
 import { Header } from "../../components/Header";
-import { backPort, Post } from "../../globalVars/globals";
+import { Page } from "../../components/Page";
+import { Main } from "../../components/Main";
+import { PostComponent } from "../../components/PostComponent";
+import { Sidebar } from "../../components/Sidebar";
+import { backPort, UserWithPosts } from "../../globalVars/globals";
+import AccountInfo from "../../components/AccountInfo";
 
-interface nicknameList {
+interface NicknameList {
   nickname: string;
 }
 
-interface nicknameProps {
-  data: Post[];
-}
-
-function Account(props: nicknameProps) {
+function Account(props: any) {
+  const userInfo = props.data as UserWithPosts;
+  console.log(props, props.data);
   return (
-    <div className="flex flex-col h-screen">
+    <Page>
       <Header></Header>
-      <div className="bg-gray-700 h-full flex p-3">
-        <div className="w-2/3 h-full bg-gray-800 mr-2 p-3">
-          {props.data.map((e, i) => {
+      <Container>
+        <Main>
+          {userInfo.posts.map((e, i) => {
             return (
-              <Link key={i} href={`/posts/${e.id}`}>
-                <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear">
-                  <h1 className="text-2xl text-blue-400 text-center">
-                    {e.title}
-                  </h1>
-                  <h1 className="text-xl text-blue-300 text-center">
-                    <i>by {e.authorName}</i>
-                  </h1>
-                  <p className="text-center">{e.content}</p>
-                </div>
-              </Link>
+              <div key={i}>
+                <PostComponent post={e} withVotes={true} />
+              </div>
             );
           })}
-        </div>
-        <div className="w-1/3 h-full bg-gray-800 ml-1">
-          Account or whatever here
-        </div>
-      </div>
-    </div>
+        </Main>
+        <Sidebar>
+          <AccountInfo userInfo={userInfo} />
+        </Sidebar>
+      </Container>
+    </Page>
   );
 }
 
+//staticprops and staticpaths search for all users then the specific user at every refresh, bit inefficient, IMPL
 export const getStaticPaths = async () => {
   const getUsers = async () => {
-    const users: Promise<nicknameList[]> = axios
+    const users: Promise<NicknameList[]> = axios
       .get(`http://localhost:${backPort}/users/all`)
       .then(({ data }) => {
         return data;
       });
     const paths = (await users).map((elem) => {
       return {
-        params: { nickname: elem.nickname.toString() },
+        params: { nickname: elem.nickname },
       };
     });
     return paths;
@@ -68,10 +65,11 @@ export const getStaticProps = async (props: any) => {
   const data = await axios
     .get(`http://localhost:${backPort}/users/`, {
       params: {
-        user: nickname,
+        nickname,
       },
     })
     .then(({ data }) => {
+      // console.log(data);
       return data;
     });
   return {

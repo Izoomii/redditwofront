@@ -1,7 +1,6 @@
 import axios from "axios";
 import React from "react";
 import { Header } from "../components/Header";
-import Popup from "../components/Popup";
 import { backPort } from "../globalVars/globals";
 
 interface testProps {
@@ -9,68 +8,48 @@ interface testProps {
 }
 
 export default function TestPage(props: testProps) {
-  // console.log(props);
-  const [results, setResults] = React.useState<any>();
-  const [popupShow, setPopupShow] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState<any>();
 
-  // const testFuncPost = async () => {
-  //   const sentData = { you: "loved", me: "loving you" };
-  //   axios
-  //     .post(`http://localhost:${backPort}/test`, sentData, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then(({ data }) => {
-  //       console.log(data);
-  //     });
-  // };
-
-  const testFuncGet = async (check: boolean) => {
-    return check
-      ? console.log("yeaaah this get excuted")
-      : console.log("naah man :(");
+  const sendImage = async () => {
+    const formData = new FormData();
+    formData.append("imageTest", selectedImage);
+    axios
+      .post(`http://localhost:${backPort}/test/post/image`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(({ data }) => {
+        console.log(data);
+      });
   };
+
   return (
     <div>
-      <Header></Header>
+      <Header />
       <div>
-        <button
-          className="w-32 h-10 bg-blue-700"
-          onClick={() => {
-            // testFuncGet(false);
-            setPopupShow(true);
+        <input
+          type="file"
+          name="imageTest"
+          onChange={(event) => {
+            setSelectedImage(event.target.value);
           }}
-        >
-          Button to click
-        </button>
+        />
       </div>
-      <div>
-        <div>This is a test page</div>
-        <div>Test results if any: {results}</div>
-        <div>
-          Popup check:
-          <Popup show={popupShow}>
-            <div className="bg-white h-1/3 w-1/2 p-2 flex flex-col">
-              <div className="grow">finna give u nigga cancer</div>
-              <button
-                onClick={() => {
-                  setPopupShow(false);
-                }}
-                className="bg-blue-700 w-full"
-              >
-                Close
-              </button>
-            </div>
-          </Popup>
-        </div>
-      </div>
+      <button
+        className="p-3 m-5 bg-blue-400"
+        onClick={() => {
+          sendImage();
+        }}
+      >
+        Send Image
+      </button>
     </div>
   );
 }
 
-export const getStaticProps = async () => {
-  return {
-    props: {},
-  };
-};
+// export const getStaticProps = async () => {
+//   return {
+//     props: {},
+//   };
+// };

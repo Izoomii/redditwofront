@@ -54,7 +54,7 @@ export const getStaticProps = async (props: any) => {
   const sub = props.params.sub;
   const res = await fetch(`http://localhost:${backPort}/subs/${sub}`);
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
   return {
     props: { data },
   };

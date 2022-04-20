@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Header } from "../../components/Header";
 import { backPort } from "../../globalVars/globals";
+import axios from "axios";
 
 interface subProps {
   data: {
@@ -32,9 +33,12 @@ export default function Subreddits(props: subProps) {
   );
 }
 
-export const getStaticProps = async (props: any) => {
-  const res = await fetch(`http://localhost:${backPort}/subs`);
-  const data = await res.json();
+export const getStaticProps = async () => {
+  const data = await axios
+    .get(`http://localhost:${backPort}/subs`)
+    .then(({ data }) => {
+      return data;
+    });
   return {
     props: { data },
   };

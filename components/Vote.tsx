@@ -30,16 +30,17 @@ export default function Vote(props: any) {
       });
   };
 
+  const fetchVotes = () => {
+    if (!withVotes) return setVotes("Vote");
+    axios
+      .get(`http://localhost:${backPort}/posts/${post.id}/votecount`)
+      .then(({ data }: AxiosResponse<voteCount>) => {
+        setVotes(`[${data.total}] -> +${data.upvotes}/-${data.downvotes}`);
+      });
+  };
+
   useEffect(() => {
-    if (withVotes) {
-      axios
-        .get(`http://localhost:${backPort}/posts/${post.id}/votecount`)
-        .then(({ data }: AxiosResponse<voteCount>) => {
-          setVotes(`[${data.total}] -> +${data.upvotes}/-${data.downvotes}`);
-        });
-    } else {
-      setVotes("Vote");
-    }
+    fetchVotes();
   });
 
   return (

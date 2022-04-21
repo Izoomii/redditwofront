@@ -8,6 +8,7 @@ export default function AvatarUpdate() {
   const inputRef = React.useRef<any>(); //CHNL
 
   const changeAvatar = async () => {
+    if (selectedImage === "") return console.log("No file selected");
     const formData = new FormData();
     formData.append("avatar", selectedImage);
     console.log(formData);

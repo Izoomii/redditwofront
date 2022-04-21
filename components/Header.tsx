@@ -66,7 +66,13 @@ export const Header = () => {
       </div>
       <div className="flex h-100 w-1/4 justify-end">
         <div className="grow text-center flex flex-col justify-center">
-          <Link href={`/users/${nickname}`}>{nickname}</Link>
+          <Link
+            href={
+              nickname === "No user logged in" ? "/login" : "/users/" + nickname
+            }
+          >
+            {nickname}
+          </Link>
         </div>
         <div className="h-10 w-fit rounded-full hover:bg-blue-600 ease-in transition-all duration-100 p-1">
           <Link href={`/settings`}>

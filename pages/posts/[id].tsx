@@ -2,6 +2,7 @@ import React from "react";
 import { backPort, Post, VoteType } from "../../globalVars/globals";
 import { Header } from "../../components/Header";
 import Vote from "../../components/Vote";
+import Link from "next/link";
 
 interface postProp {
   data: {
@@ -24,7 +25,10 @@ function PostPage(data: postProp) {
           <div className="w-3/4 bg-gray-600">
             <div id="postHead" className="p-5">
               <h1 className="italic">
-                r/{post.sub} · {post.authorName}
+                r/{post.sub} ·{" "}
+                <Link href={`/users/${post.authorName}`}>
+                  {post.authorName}
+                </Link>
               </h1>
               <h1 className="text-3xl">{post.title}</h1>
             </div>
@@ -34,7 +38,7 @@ function PostPage(data: postProp) {
               </div>
             </div>
             {/* {VOTE HERE} */}
-            <Vote post={post} />
+            <Vote post={post} withVotes={true} />
           </div>
         </div>
       </div>

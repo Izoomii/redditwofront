@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import AvatarUpdate from "../components/AvatarUpdate";
 import { Container } from "../components/Container";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
@@ -99,103 +100,100 @@ export default function Settings(props: any) {
             <h1 className="text-4xl m-2">Settings</h1>
             <div className="w-full flex justify-center">
               <div className="w-11/12 bg-gray-600 flex flex-col p-3">
-                <div className="w-2/5">
-                  <table className="table-auto  w-full">
-                    <tbody>
-                      <tr>
-                        <td>Email:</td>
-                        <td>
-                          <input
-                            disabled={disabled}
-                            value={email}
-                            onChange={(event) => {
-                              setEmail(event.target.value);
-                            }}
-                            className="w-full"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Nickname:</td>
-                        <td>
-                          <input
-                            disabled={disabled}
-                            value={nickname}
-                            onChange={(event) => {
-                              setNickname(event.target.value);
-                            }}
-                            className="w-full"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Name:</td>
-                        <td>
-                          <input
-                            disabled={disabled}
-                            value={name}
-                            onChange={(event) => {
-                              setName(event.target.value);
-                            }}
-                            className="w-full"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Avatar:</td>
-                        <td>
-                          <input disabled={true} type="file" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Password:</td>
-                        <td>
-                          <button
-                            disabled={disabled}
-                            onClick={() => {
-                              setPwPopupShow(!pwPopupShow);
-                            }}
-                            className="bg-blue-500 rounded-sm w-full disabled:opacity-50"
-                          >
-                            Change Password
-                          </button>
+                <div className="w-full flex justify-between">
+                  <div className="w-2/5">
+                    <table className="table-auto  w-full">
+                      <tbody>
+                        <tr>
+                          <td>Email:</td>
+                          <td>
+                            <input
+                              disabled={disabled}
+                              value={email}
+                              onChange={(event) => {
+                                setEmail(event.target.value);
+                              }}
+                              className="w-full"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Nickname:</td>
+                          <td>
+                            <input
+                              disabled={disabled}
+                              value={nickname}
+                              onChange={(event) => {
+                                setNickname(event.target.value);
+                              }}
+                              className="w-full"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Name:</td>
+                          <td>
+                            <input
+                              disabled={disabled}
+                              value={name}
+                              onChange={(event) => {
+                                setName(event.target.value);
+                              }}
+                              className="w-full"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Password:</td>
+                          <td>
+                            <button
+                              disabled={disabled}
+                              onClick={() => {
+                                setPwPopupShow(!pwPopupShow);
+                              }}
+                              className="bg-blue-500 rounded-sm w-full disabled:opacity-50"
+                            >
+                              Change Password
+                            </button>
 
-                          <Popup
-                            show={pwPopupShow}
-                            onClose={() => {
-                              setPwPopupShow(false);
-                            }}
-                          >
-                            <PasswordReset />
-                          </Popup>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="flex w-full justify-between p-2">
-                    <button
-                      className="bg-blue-600 rounded-sm w-24"
-                      onClick={() => {
-                        setDisabled(!disabled);
-                        if (!disabled) {
-                          setEmail(originalEmail);
-                          setNickname(originalNickname);
-                          setName(originalName);
-                        }
-                      }}
-                    >
-                      {editButtonText(disabled)}
-                    </button>
-                    <button
-                      disabled={disabled}
-                      onClick={() => {
-                        validateInfo();
-                      }}
-                      className="bg-blue-600 w-1/2 disabled:opacity-50"
-                    >
-                      Apply
-                    </button>
+                            <Popup
+                              show={pwPopupShow}
+                              onClose={() => {
+                                setPwPopupShow(false);
+                              }}
+                            >
+                              <PasswordReset />
+                            </Popup>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="flex w-full justify-between p-2">
+                      <button
+                        className="bg-blue-600 rounded-sm w-24"
+                        onClick={() => {
+                          setDisabled(!disabled);
+                          if (!disabled) {
+                            setEmail(originalEmail);
+                            setNickname(originalNickname);
+                            setName(originalName);
+                          }
+                        }}
+                      >
+                        {editButtonText(disabled)}
+                      </button>
+                      <button
+                        disabled={disabled}
+                        onClick={() => {
+                          validateInfo();
+                        }}
+                        className="bg-blue-600 w-1/2 disabled:opacity-50"
+                      >
+                        Apply
+                      </button>
+                    </div>
                   </div>
+                  <AvatarUpdate />
                 </div>
                 <div className="w-full flex justify-end">
                   <button

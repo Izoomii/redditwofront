@@ -1,37 +1,25 @@
 import axios from "axios";
-import React from "react";
+import { useState } from "react";
 import { Header } from "../components/Header";
-import { backPort } from "../globalVars/globals";
+import { backURL } from "../globalVars/globals";
 
 interface updateMessage {
   message: string;
 }
 
 export default function CreatePost() {
-  // const [user, setUser] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [sub, setSub] = React.useState("");
-  const [content, setContent] = React.useState("");
-  const [update, setUpdate] = React.useState("");
+  const [title, setTitle] = useState("");
+  const [sub, setSub] = useState("");
+  const [content, setContent] = useState("");
+  const [update, setUpdate] = useState("");
 
   //just need to figure out how to send user info with this or keep cookie alive for request, or just remove all tha bs and give nickname with text or some shit
   const submitPost = async () => {
     let data = { sub, title, content };
     if (title == "") return setUpdate("No title given.");
     if (sub == "") return setUpdate("No sub given.");
-    // await fetch(`http://localhost:${backPort}/posts/createpost`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data: updateMessage) => {
-    //     setUpdate(data.message);
-    //   });
     axios
-      .post(`http://localhost:${backPort}/subs/createpost`, data, {
+      .post(backURL + "/subs/createpost", data, {
         headers: {
           "Content-Type": "application/json",
         },

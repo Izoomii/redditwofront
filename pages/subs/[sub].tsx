@@ -1,7 +1,6 @@
-import React from "react";
 import Link from "next/link";
 import { Header } from "../../components/Header";
-import { backPort, Post } from "../../globalVars/globals";
+import { backURL, Post } from "../../globalVars/globals";
 
 interface subProps {
   data: Post[];
@@ -37,7 +36,7 @@ interface allSubsProps {
 }
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`http://localhost:${backPort}/subs`);
+  const res = await fetch(backURL + "/subs");
   const data: Promise<allSubsProps[]> = await res.json();
   const paths = (await data).map((elem) => {
     return {
@@ -52,7 +51,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (props: any) => {
   const sub = props.params.sub;
-  const res = await fetch(`http://localhost:${backPort}/subs/${sub}`);
+  const res = await fetch(backURL + "/subs/" + sub);
   const data = await res.json();
   // console.log(data);
   return {

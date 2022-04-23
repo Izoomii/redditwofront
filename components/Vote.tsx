@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import React, { useEffect } from "react";
-import { VoteType, backPort, Post } from "../globalVars/globals";
+import { useEffect, useState } from "react";
+import { VoteType, backURL, Post } from "../globalVars/globals";
 
 interface voteCount {
   upvotes: number;
@@ -12,28 +12,25 @@ export default function Vote(props: any) {
   const post = props.post as Post;
   const withVotes = props.withVotes as boolean;
 
-  const [votes, setVotes] = React.useState("");
+  const [votes, setVotes] = useState("");
 
   const sendVote = (type: VoteType) => {
     axios
       .post(
-        `http://localhost:${backPort}/posts/${post.id}/vote`,
-        {
-          vote: type,
-        },
-        {
-          withCredentials: true,
-        }
+        backURL + `/posts/${post.id}/vote`,
+        { vote: type },
+        { withCredentials: true }
       )
       .then(({ data }) => {
         console.log(data);
+        fetchVotes();
       });
   };
 
   const fetchVotes = () => {
     if (!withVotes) return setVotes("Vote");
     axios
-      .get(`http://localhost:${backPort}/posts/${post.id}/votecount`)
+      .get(backURL + `/posts/${post.id}/votecount`)
       .then(({ data }: AxiosResponse<voteCount>) => {
         setVotes(`[${data.total}] -> +${data.upvotes}/-${data.downvotes}`);
       });

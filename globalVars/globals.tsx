@@ -1,5 +1,5 @@
-export const backPort = 8080;
-
+export const backURL = "http://localhost:8080";
+// export const backPort = 8080;
 export type VoteType = "UP" | "DOWN" | null;
 
 export const avatarPath =
@@ -15,7 +15,7 @@ export interface Post {
   content: string;
   published: boolean;
   author: string; //is actually "User", which is another model
-  authorName: string;
+  authorName: string | null;
 }
 
 export interface User {
@@ -34,3 +34,10 @@ export interface UserWithPosts {
   name: string;
   posts: Post[];
 }
+
+export const verifyPasswordStrength = (password: string) => {
+  const check = new RegExp(
+    "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
+  );
+  return check.test(password);
+};

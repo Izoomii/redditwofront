@@ -1,4 +1,3 @@
-import React from "react";
 import { Post } from "../globalVars/globals";
 import Link from "next/link";
 import Vote from "./Vote";
@@ -20,8 +19,10 @@ export const PostComponent = (props: any) => {
           <div className="h-full flex flex-col justify-center">
             <h1 className="text-2xl text-blue-400 text-center">{post.title}</h1>
             <h1 className="text-xl text-blue-300 text-center">
-              <Link href={`/users/${post.authorName}`}>
-                <i>by {post.authorName}</i>
+              <Link
+                href={`${post.authorName ? "/users/" + post.authorName : ""}`}
+              >
+                <i>by {post.authorName ? post.authorName : "[deleted]"}</i>
               </Link>
             </h1>
             <br />

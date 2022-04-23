@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Sidebar = (props: any) => {
   return (
     <div className="w-1/4 bg-gray-800 ml-5 p-5">

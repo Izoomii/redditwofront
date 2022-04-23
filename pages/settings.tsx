@@ -1,25 +1,25 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AvatarUpdate from "../components/AvatarUpdate";
 import { Container } from "../components/Container";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
 import PasswordReset from "../components/PasswordReset";
 import Popup from "../components/Popup";
-import { backPort, User } from "../globalVars/globals";
+import { backURL, User } from "../globalVars/globals";
 
 export default function Settings(props: any) {
-  const [disabled, setDisabled] = React.useState(true);
-  const [originalEmail, setOriginalEmail] = React.useState("");
-  const [originalNickname, setOriginalNickname] = React.useState("");
-  const [originalName, setOriginalName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [nickname, setNickname] = React.useState("");
-  const [name, setName] = React.useState("");
-  // const [password, setPassword] = React.useState("");
+  const [disabled, setDisabled] = useState(true);
+  const [originalEmail, setOriginalEmail] = useState("");
+  const [originalNickname, setOriginalNickname] = useState("");
+  const [originalName, setOriginalName] = useState("");
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [name, setName] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const [pwPopupShow, setPwPopupShow] = React.useState(false);
+  const [pwPopupShow, setPwPopupShow] = useState(false);
   const editButtonText = (disabled: boolean) => {
     return disabled ? "Edit info" : "Discard";
   };
@@ -30,7 +30,7 @@ export default function Settings(props: any) {
   const logout = async () => {
     axios
       .post(
-        `http://localhost:${backPort}/users/logout`,
+        backURL + "/users/logout",
         {},
         {
           withCredentials: true,
@@ -45,7 +45,7 @@ export default function Settings(props: any) {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get(`http://localhost:${backPort}/users/verifyme`, {
+        .get(backURL + "/users/verifyme", {
           withCredentials: true,
         })
         .then(({ data }) => {
@@ -74,7 +74,7 @@ export default function Settings(props: any) {
     } else {
       axios
         .post(
-          `http://localhost:${backPort}/users/update`,
+          backURL + "/users/update",
           {
             email,
             nickname,

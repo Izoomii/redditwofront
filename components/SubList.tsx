@@ -1,7 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { backPort } from "../globalVars/globals";
+import { useEffect, useState } from "react";
+import { backURL } from "../globalVars/globals";
 
 //preferably always put in long thin "list-like" containers
 
@@ -10,15 +10,13 @@ interface Subs {
 }
 //probably assumes the props are those given to it in other components
 export default function SubList() {
-  const [subs, setSubs] = React.useState<Subs[]>([]); //CHNL
+  const [subs, setSubs] = useState<Subs[]>([]); //CHNL
 
   useEffect(() => {
     const subs = async () => {
-      const results = await axios
-        .get(`http://localhost:${backPort}/subs`)
-        .then(({ data }) => {
-          return data;
-        });
+      const results = await axios.get(backURL + "/subs").then(({ data }) => {
+        return data;
+      });
       setSubs(results);
     };
     subs();

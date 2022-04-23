@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Popup(props: any) {
   return (props.show as boolean) ? (
     <div

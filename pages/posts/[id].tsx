@@ -1,5 +1,4 @@
-import React from "react";
-import { backPort, Post, VoteType } from "../../globalVars/globals";
+import { backURL, Post } from "../../globalVars/globals";
 import { Header } from "../../components/Header";
 import Vote from "../../components/Vote";
 import Link from "next/link";
@@ -47,7 +46,7 @@ function PostPage(data: postProp) {
 }
 
 export async function getStaticPaths() {
-  const results = await fetch(`http://localhost:${backPort}/posts`); //CHNL
+  const results = await fetch(backURL + "/posts"); //CHNL
   const data: Promise<idList[]> = results.json();
   const paths = (await data).map((elem) => {
     return {
@@ -63,7 +62,7 @@ export async function getStaticPaths() {
 //improve this IMPL
 export async function getStaticProps(props: any) {
   const id = props.params.id;
-  const res = await fetch(`http://localhost:${backPort}/posts/${id}`); //CHNL
+  const res = await fetch(backURL + "/posts/" + id); //CHNL
   const data = await res.json();
 
   return {

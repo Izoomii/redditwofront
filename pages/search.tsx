@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { backPort } from "../globalVars/globals";
+import { backURL } from "../globalVars/globals";
 import { Post } from "../globalVars/globals";
 import { PostComponent } from "../components/PostComponent";
 import { Main } from "../components/Main";
@@ -11,13 +11,13 @@ import { Page } from "../components/Page";
 
 export function Search() {
   const router = useRouter();
-  const [posts, setPosts] = React.useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   //IMPL, handle 400 Bad Request status that's sent when query is empty
   const query = router.query;
   useEffect(() => {
     axios
-      .get(`http://localhost:${backPort}/search`, {
+      .get(backURL + "/search", {
         params: query,
       })
       .then(({ data }) => {

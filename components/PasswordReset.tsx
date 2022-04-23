@@ -1,16 +1,16 @@
 import axios from "axios";
 import Router from "next/router";
-import React from "react";
-import { backPort } from "../globalVars/globals";
+import { useState } from "react";
+import { backURL, verifyPasswordStrength } from "../globalVars/globals";
 
 export default function PasswordReset() {
-  const [originalPw, setOriginalPw] = React.useState("");
-  const [newPw, setNewPw] = React.useState("");
-  const [repeatPw, setRepeatPw] = React.useState("");
-  const [showOriginalPw, setShowOriginalPw] = React.useState(false);
-  const [showNewPw, setShowNewPw] = React.useState(false);
-  const [showRepeatPw, setShowRepeatPw] = React.useState(false);
-  const [alert, setAlert] = React.useState("");
+  const [originalPw, setOriginalPw] = useState("");
+  const [newPw, setNewPw] = useState("");
+  const [repeatPw, setRepeatPw] = useState("");
+  const [showOriginalPw, setShowOriginalPw] = useState(false);
+  const [showNewPw, setShowNewPw] = useState(false);
+  const [showRepeatPw, setShowRepeatPw] = useState(false);
+  const [alert, setAlert] = useState("");
 
   const showPw = (check: boolean) => {
     if (check) {
@@ -20,15 +20,8 @@ export default function PasswordReset() {
     }
   };
 
-  const verifyPasswordStrength = () => {
-    const check = new RegExp(
-      "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
-    );
-    return check.test(newPw);
-  };
-
   const resetPassword = () => {
-    if (!verifyPasswordStrength()) {
+    if (!verifyPasswordStrength(newPw)) {
       setAlert(
         "Password must be a combination of at least 8 lowercase and uppercase letters, digits and special characters."
       );
@@ -40,7 +33,7 @@ export default function PasswordReset() {
     setAlert("");
     axios
       .post(
-        `http://localhost:${backPort}/auth/passwordchange`,
+        backURL + "/auth/passwordchange",
         {
           original: originalPw,
           new: newPw,

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { avatarPath } from "../globalVars/globals";
 
 export default function Avatar(props: any) {
   const userAvatar = props.avatar as string | null;
-  const [avatar, setAvatar] = React.useState(avatarPath + "0.png");
+  const [avatar, setAvatar] = useState(avatarPath + "0.png");
   useEffect(() => {
     if (userAvatar !== null) setAvatar(avatarPath + userAvatar);
   });

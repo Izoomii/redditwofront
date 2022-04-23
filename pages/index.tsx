@@ -1,11 +1,10 @@
-import React from "react";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
 import { Sidebar } from "../components/Sidebar";
 import { Main } from "../components/Main";
 import { Container } from "../components/Container";
 import { PostComponent } from "../components/PostComponent";
-import { backPort, Post } from "../globalVars/globals";
+import { backURL, Post } from "../globalVars/globals";
 import SubList from "../components/SubList";
 import axios from "axios";
 
@@ -14,7 +13,7 @@ interface postsProp {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`http://localhost:${backPort}/posts/all`); //CHNL ??????
+  const res = await fetch(backURL + "/posts/all"); //CHNL ??????
   const data = await res.json();
   // console.log(data);
   return {
@@ -26,7 +25,7 @@ function IndexPage(props: postsProp) {
   const posts = props.data;
   const click = async () => {
     const user = await axios
-      .get(`http://localhost:${backPort}/users/verifyme`, {
+      .get(backURL + "/users/verifyme", {
         withCredentials: true,
       })
       .then(({ data }) => {

@@ -1,13 +1,11 @@
 import axios from "axios";
-import Link from "next/link";
-import React from "react";
 import { Container } from "../../components/Container";
 import { Header } from "../../components/Header";
 import { Page } from "../../components/Page";
 import { Main } from "../../components/Main";
 import { PostComponent } from "../../components/PostComponent";
 import { Sidebar } from "../../components/Sidebar";
-import { backPort, UserWithPosts } from "../../globalVars/globals";
+import { backURL, UserWithPosts } from "../../globalVars/globals";
 import AccountInfo from "../../components/AccountInfo";
 
 interface NicknameList {
@@ -42,7 +40,7 @@ function Account(props: any) {
 export const getStaticPaths = async () => {
   const getUsers = async () => {
     const users: Promise<NicknameList[]> = axios
-      .get(`http://localhost:${backPort}/users/all`)
+      .get(backURL + "/users/all")
       .then(({ data }) => {
         return data;
       });
@@ -63,7 +61,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (props: any) => {
   const nickname = props.params.nickname;
   const data = await axios
-    .get(`http://localhost:${backPort}/users/`, {
+    .get(backURL + "/users/", {
       params: {
         nickname,
       },

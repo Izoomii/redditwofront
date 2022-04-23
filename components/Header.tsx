@@ -1,8 +1,8 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { backPort, User } from "../globalVars/globals";
+import { useEffect, useState } from "react";
+import { backURL, User } from "../globalVars/globals";
 import Avatar from "./Avatar";
 
 // interface searchResults {
@@ -11,18 +11,18 @@ import Avatar from "./Avatar";
 
 export const Header = () => {
   const router = useRouter();
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = useState("");
   //could merge nickname and avatar into user but it's not much, IMPL
-  const [nickname, setNickname] = React.useState("");
-  const [avatar, setAvatar] = React.useState<string | null>(null);
+  const [nickname, setNickname] = useState("");
+  const [avatar, setAvatar] = useState<string | null>(null);
 
   const searchQuery = () => {
-    router.push(`/search?query=${search}`);
+    router.push("/search?query=" + search);
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:${backPort}/users/verifyme`, {
+      .get(backURL + "/users/verifyme", {
         withCredentials: true,
       })
       .then(({ data }) => {

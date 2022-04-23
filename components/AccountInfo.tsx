@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { avatarPath, UserWithPosts } from "../globalVars/globals";
+import { UserWithPosts } from "../globalVars/globals";
 import Avatar from "./Avatar";
 
 export default function AccountInfo(props: any) {

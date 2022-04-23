@@ -1,20 +1,18 @@
 import axios from "axios";
 import Router from "next/router";
-import React from "react";
-import { backPort } from "../globalVars/globals";
+import { useRef, useState } from "react";
+import { backURL } from "../globalVars/globals";
 
 export default function AvatarUpdate() {
-  const [selectedImage, setSelectedImage] = React.useState("");
-  const inputRef = React.useRef<any>(); //CHNL
+  const [selectedImage, setSelectedImage] = useState("");
+  const inputRef = useRef<any>(); //CHNL
 
   const changeAvatar = async () => {
     if (selectedImage === "") return console.log("No file selected");
     const formData = new FormData();
     formData.append("avatar", selectedImage);
-    console.log(formData);
-    console.log(selectedImage);
     axios
-      .post(`http://localhost:${backPort}/users/updateavatar`, formData, {
+      .post(backURL + "/users/updateavatar", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

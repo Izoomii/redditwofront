@@ -1,26 +1,27 @@
 import Link from "next/link";
 import { Header } from "../../components/Header";
-import { backURL } from "../../globalVars/globals";
+import { backURL, Sub } from "../../globalVars/globals";
 import axios from "axios";
 
 interface subProps {
   data: {
-    sub: string;
+    name: string;
   }[];
 }
 
 export default function Subreddits(props: subProps) {
+  const subs = props.data;
   return (
     <div className="h-screen flex flex-col">
       <Header></Header>
       <div className="grow bg-gray-800 flex flex-col">
         <div className="p-2">
-          {props.data.map((e, i) => {
+          {subs.map((e, i) => {
             return (
-              <Link key={i} href={`/subs/${e.sub}`}>
+              <Link key={i} href={`/subs/${e.name}`}>
                 <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear">
                   <h1 className="text-2xl text-blue-400 text-center">
-                    {e.sub}
+                    {e.name}
                   </h1>
                 </div>
               </Link>

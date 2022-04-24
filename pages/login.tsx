@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
-import { backURL } from "../globalVars/globals";
+import { backURL, showPw } from "../globalVars/globals";
 
 interface User {
   id: string;
@@ -22,6 +22,8 @@ interface authRes {
 
 export default function Login() {
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -76,12 +78,7 @@ export default function Login() {
             }
           >
             <div className="w-fit p-2 ">
-              <form
-                className="bg-white p-2"
-                action={backURL + "/auth/login"}
-                method="POST"
-                style={{ border: "1px solid black" }}
-              >
+              <div className="bg-white p-2 border-2 border-black">
                 <label>
                   Nickname:
                   <input
@@ -103,7 +100,7 @@ export default function Login() {
                   <input
                     className="m-2 mt-0"
                     name="password"
-                    type="text"
+                    type={showPw(showPassword)}
                     value={password}
                     placeholder="Password"
                     onChange={(event) => {
@@ -114,9 +111,15 @@ export default function Login() {
                     }}
                   />
                 </label>
+                <button
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  <i>Show</i>
+                </button>
                 <br />
                 <button
-                  type="button"
                   className="bg-blue-300 w-full hover:bg-blue-400"
                   onClick={() => {
                     loginUser();
@@ -124,7 +127,7 @@ export default function Login() {
                 >
                   Connect
                 </button>
-              </form>
+              </div>
               <div className="text-center text-blue-100">
                 <Link href={"/createuser"}>Create an account</Link>
               </div>

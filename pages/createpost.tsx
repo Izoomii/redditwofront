@@ -9,17 +9,17 @@ interface updateMessage {
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
-  const [sub, setSub] = useState("");
+  const [subName, setSubName] = useState("");
   const [content, setContent] = useState("");
   const [update, setUpdate] = useState("");
 
   //just need to figure out how to send user info with this or keep cookie alive for request, or just remove all tha bs and give nickname with text or some shit
   const submitPost = async () => {
-    let data = { sub, title, content };
+    let data = { subName, title, content };
     if (title == "") return setUpdate("No title given.");
-    if (sub == "") return setUpdate("No sub given.");
+    if (subName == "") return setUpdate("No sub given.");
     axios
-      .post(backURL + "/subs/createpost", data, {
+      .post(backURL + "/posts/createpost", data, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -39,23 +39,13 @@ export default function CreatePost() {
             setUpdate("");
           }}
         >
-          {/* <label>
-            User
-            <input
-              name="authorName"
-              value={user}
-              onChange={(event) => {
-                setUser(event.target.value);
-              }}
-            />
-          </label> */}
           <label>
             Sub
             <input
-              name="sub"
-              value={sub}
+              name="subName"
+              value={subName}
               onChange={(event) => {
-                setSub(event.target.value);
+                setSubName(event.target.value);
               }}
             />
           </label>

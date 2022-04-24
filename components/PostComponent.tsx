@@ -17,14 +17,19 @@ export const PostComponent = (props: any) => {
       <div className="grow">
         <Link href={`/posts/${post.id}`}>
           <div className="h-full flex flex-col justify-center">
-            <h1 className="text-2xl text-blue-400 text-center">{post.title}</h1>
-            <h1 className="text-xl text-blue-300 text-center">
+            <div className="text-2xl text-blue-400 text-center">
+              {post.title}
+            </div>
+            <div className="text-xl text-blue-300 text-center">
               <Link
                 href={`${post.authorName ? "/users/" + post.authorName : ""}`}
               >
                 <i>by {post.authorName ? post.authorName : "[deleted]"}</i>
+              </Link>{" "}
+              <Link href={`/subs/${post.subName}`}>
+                <i className="text-gray-600">[r/{post.subName}]</i>
               </Link>
-            </h1>
+            </div>
             <br />
             <p className="text-center p-2">{post.content}</p>
           </div>

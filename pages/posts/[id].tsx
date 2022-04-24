@@ -24,7 +24,10 @@ function PostPage(data: postProp) {
           <div className="w-3/4 bg-gray-600">
             <div id="postHead" className="p-5">
               <h1 className="italic">
-                r/{post.sub} ·{" "}
+                <Link href={`/subs/${post.subName}`}>
+                  {`r/${post.subName}`}
+                </Link>
+                {" · "}
                 <Link href={`/users/${post.authorName}`}>
                   {post.authorName}
                 </Link>

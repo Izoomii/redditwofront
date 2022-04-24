@@ -1,7 +1,7 @@
 import axios from "axios";
 import Router from "next/router";
 import { useState } from "react";
-import { backURL, verifyPasswordStrength } from "../globalVars/globals";
+import { backURL, verifyPasswordStrength, showPw } from "../globalVars/globals";
 
 export default function PasswordReset() {
   const [originalPw, setOriginalPw] = useState("");
@@ -11,14 +11,6 @@ export default function PasswordReset() {
   const [showNewPw, setShowNewPw] = useState(false);
   const [showRepeatPw, setShowRepeatPw] = useState(false);
   const [alert, setAlert] = useState("");
-
-  const showPw = (check: boolean) => {
-    if (check) {
-      return "text";
-    } else {
-      return "password";
-    }
-  };
 
   const resetPassword = () => {
     if (!verifyPasswordStrength(newPw)) {

@@ -1,9 +1,11 @@
 import axios from "axios";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { backURL, verifyPasswordStrength, showPw } from "../globalVars/globals";
 
 export default function PasswordReset() {
+  const router = useRouter();
+
   const [originalPw, setOriginalPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [repeatPw, setRepeatPw] = useState("");
@@ -37,7 +39,7 @@ export default function PasswordReset() {
       )
       .then(({ data }) => {
         if (!data.passwordChanged) return setAlert("An error occurred");
-        Router.push("/login");
+        router.push("/login");
       });
   };
 

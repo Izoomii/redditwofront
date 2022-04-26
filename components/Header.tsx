@@ -40,10 +40,10 @@ export const Header = () => {
           <a href="/">RedditTwo</a>
         </div>
         <div className="grid place-items-center">
-          <a href="/createpost">Create Post</a>
+          <a href="/subs">All Subs</a>
         </div>
         <div className="grid place-items-center">
-          <a href="/login">Login</a>
+          <a href="/all">r/All</a>
         </div>
       </div>
       <div className="flex h-100 w-2/4 p-1">
@@ -75,7 +75,7 @@ export const Header = () => {
           </Link>
         </div>
         <div className="h-10 w-fit rounded-full hover:bg-blue-600 ease-in transition-all duration-100 p-1">
-          <Link href={`/settings`}>
+          <Link passHref href={`/settings`}>
             <div className="w-full h-full">
               <Avatar avatar={avatar} />
             </div>

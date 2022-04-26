@@ -1,7 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
 import { backURL, showPw } from "../globalVars/globals";
@@ -29,11 +29,21 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [accountCheck, setAccountCheck] = useState("");
 
+  useEffect(() => {
+    axios
+      .get(`${backURL}/users/verifyme`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        if (data.user) return router.push("/");
+      });
+  }, []);
+
   const checkUser = () => {
     if (nickname == "") {
       setAccountCheck("Please fill the nickname section.");
     } else {
-      axios.get<User>(backURL + "/auth/" + nickname).then(({ data }) => {
+      axios.get<User>(`${backURL}/auth/${nickname}`).then(({ data }) => {
         if (data.nickname === nickname) {
           setAccountCheck(`${nickname} exists!`);
         } else {
@@ -46,7 +56,7 @@ export default function Login() {
   const loginUser = async () => {
     axios
       .post<authRes>(
-        backURL + "/auth/login",
+        `${backURL}/auth/login`,
         JSON.stringify({ nickname, password }),
         {
           headers: {
@@ -55,7 +65,7 @@ export default function Login() {
           withCredentials: true,
         }
       )
-      // data has any type, works, but should be fixed when possible
+      // data has any type, works, but should be fixed when possible CHNL
       .then(({ data }) => {
         if (data.authenticate == false) {
           setAccountCheck(data.message);

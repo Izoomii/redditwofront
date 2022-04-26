@@ -1,9 +1,11 @@
 import axios from "axios";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { backURL } from "../globalVars/globals";
 
 export default function AvatarUpdate() {
+  const router = useRouter();
+
   const [selectedImage, setSelectedImage] = useState("");
   const inputRef = useRef<any>(); //CHNL
 
@@ -20,7 +22,7 @@ export default function AvatarUpdate() {
       })
       .then(({ data }) => {
         console.log(data);
-        if (data.updated) Router.push("/");
+        if (data.updated) router.push("/");
       });
   };
 

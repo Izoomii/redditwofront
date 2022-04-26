@@ -39,7 +39,7 @@ export default function Settings(props: any) {
       .then(({ data }) => {
         console.log(data);
       });
-    router.push("/");
+    router.push("/login");
   };
 
   useEffect(() => {

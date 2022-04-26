@@ -5,6 +5,7 @@ import { Header } from "../../components/Header";
 import { Main } from "../../components/Main";
 import { Sidebar } from "../../components/Sidebar";
 import SubInfo from "../../components/SubInfo";
+import SubSideBar from "../../components/SubSideBar";
 import { backURL, Post, Sub } from "../../globalVars/globals";
 
 export default function SubPage(props: any) {
@@ -32,9 +33,7 @@ export default function SubPage(props: any) {
             })}
           </div>
         </Main>
-        <Sidebar>
-          <SubInfo sub={sub} />
-        </Sidebar>
+        <SubSideBar sub={sub} />
       </Container>
     </div>
   );

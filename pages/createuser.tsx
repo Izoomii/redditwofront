@@ -1,5 +1,5 @@
 import axios from "axios";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { Container } from "../components/Container";
 import { Header } from "../components/Header";
@@ -16,6 +16,8 @@ interface Requirements {
 }
 
 export default function CreateUser() {
+  const router = useRouter();
+
   const [alert, setAlert] = useState("");
   const [image, setImage] = useState("");
   const imageRef = useRef<any>();
@@ -68,7 +70,7 @@ export default function CreateUser() {
         console.log(data);
         setAlert(data.message);
         //change avatar here
-        if (!image) return Router.push("/");
+        if (!image) return router.push("/");
         const formData = new FormData();
         formData.append("avatar", image);
         axios
@@ -80,7 +82,7 @@ export default function CreateUser() {
           })
           .then(({ data }) => {
             console.log(data);
-            if (data.updated) Router.push("/");
+            if (data.updated) router.push("/"); // add something if error happens IMPL
           });
       });
   };

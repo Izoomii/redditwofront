@@ -5,7 +5,7 @@ import { Page } from "../../components/Page";
 import { Main } from "../../components/Main";
 import { PostComponent } from "../../components/PostComponent";
 import { Sidebar } from "../../components/Sidebar";
-import { backURL, UserWithPosts } from "../../globalVars/globals";
+import { backURL, User } from "../../globalVars/globals";
 import AccountInfo from "../../components/AccountInfo";
 
 interface NicknameList {
@@ -13,7 +13,7 @@ interface NicknameList {
 }
 
 function Account(props: any) {
-  const userInfo = props.data as UserWithPosts;
+  const userInfo = props.data as User;
   console.log(props, props.data);
   return (
     <Page>

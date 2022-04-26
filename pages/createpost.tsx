@@ -1,17 +1,22 @@
 import axios from "axios";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { backURL } from "../globalVars/globals";
 
-interface updateMessage {
-  message: string;
-}
-
 export default function CreatePost() {
+  const router = useRouter();
+
+  const subNameFromQuery = router.query.sub as string;
+
   const [title, setTitle] = useState("");
   const [subName, setSubName] = useState("");
   const [content, setContent] = useState("");
   const [update, setUpdate] = useState("");
+
+  useEffect(() => {
+    setSubName(subNameFromQuery ? subNameFromQuery : "");
+  }, []);
 
   //just need to figure out how to send user info with this or keep cookie alive for request, or just remove all tha bs and give nickname with text or some shit
   const submitPost = async () => {

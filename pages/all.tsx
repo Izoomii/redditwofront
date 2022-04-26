@@ -7,37 +7,22 @@ import { PostComponent } from "../components/PostComponent";
 import { backURL, Post } from "../globalVars/globals";
 import SubList from "../components/SubList";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 interface postsProp {
   data: Post[];
 }
 
-// export async function getStaticProps() {
-//   return {
-//     props: {},
-//   };
-// }
-
-function IndexPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  const fetchFeed = async () => {
-    const data = await axios
-      .get(`${backURL}`, {
-        withCredentials: true,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        setPosts(data);
-      });
-    return data;
+export async function getStaticProps() {
+  const res = await fetch(backURL + "/posts/all"); //CHNL ??????
+  const data = await res.json();
+  // console.log(data);
+  return {
+    props: { data },
   };
+}
 
-  useEffect(() => {
-    fetchFeed();
-  }, []);
-
+function AllPage(props: postsProp) {
+  const posts = props.data;
   const click = async () => {
     const user = await axios
       .get(backURL + "/users/verifyme", {
@@ -80,4 +65,4 @@ function IndexPage() {
   );
 }
 
-export default IndexPage;
+export default AllPage;

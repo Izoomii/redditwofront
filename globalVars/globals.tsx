@@ -11,6 +11,7 @@ export interface User {
   name?: string;
   avatar?: string;
   posts: Post[];
+  subscriptions: Subscription[];
 }
 
 export interface Post {
@@ -33,14 +34,12 @@ export interface Sub {
   posts: Post[];
   owner: User;
   ownerName: string;
+  subscriptions: Subscription[];
 }
 
-// ?? this feels replaceable CHNL
-export interface UserWithPosts {
-  avatar: string;
-  nickname: string;
-  name: string;
-  posts: Post[];
+export interface Subscription {
+  userId: string;
+  subId: string;
 }
 
 export const showPw = (check: boolean) => {

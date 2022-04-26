@@ -1,8 +1,8 @@
-import { UserWithPosts } from "../globalVars/globals";
+import { User } from "../globalVars/globals";
 import Avatar from "./Avatar";
 
 export default function AccountInfo(props: any) {
-  const userInfo = props.userInfo as UserWithPosts;
+  const userInfo = props.userInfo as User;
 
   const hasName = () => {
     return userInfo.name === null

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { avatarPath } from "../globalVars/globals";
+import { avatarsPath } from "../globalVars/globals";
 
 export default function Avatar(props: any) {
   const userAvatar = props.avatar as string | null;
-  const [avatar, setAvatar] = useState(avatarPath + "0.png");
+  const [avatar, setAvatar] = useState(avatarsPath + "0.png");
   useEffect(() => {
-    if (userAvatar !== null) setAvatar(avatarPath + userAvatar);
+    if (userAvatar !== null) setAvatar(avatarsPath + userAvatar);
   });
 
   return <img src={avatar} className="object-contain h-full rounded-full" />;

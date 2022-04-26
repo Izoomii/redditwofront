@@ -1,7 +1,9 @@
 export const backURL = "http://localhost:8080";
 export type VoteType = "UP" | "DOWN" | null;
 
-export const avatarPath = "/assets/avatars/";
+export const avatarsPath = "/assets/avatars/";
+export const subImagesPath = "/assets/subImages/";
+export const postImagesPath = "/assets/postImages/";
 
 export interface User {
   id: string;
@@ -22,6 +24,7 @@ export interface Post {
   updatedAt: Date;
   title: string;
   content: string;
+  images: string[];
   published: boolean;
   author: User;
   authorName: string | null;
@@ -31,6 +34,7 @@ export interface Sub {
   id: string;
   name: string;
   description?: string;
+  image?: string;
   posts: Post[];
   owner: User;
   ownerName: string;

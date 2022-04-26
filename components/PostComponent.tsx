@@ -32,6 +32,9 @@ export const PostComponent = (props: any) => {
             </div>
             <br />
             <p className="text-center p-2">{post.content}</p>
+            <p className="text-center p-1 text-gray-600 italic">
+              {post.images.length === 0 ? "" : `[Image]`}
+            </p>
           </div>
         </Link>
       </div>

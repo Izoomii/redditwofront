@@ -1,4 +1,4 @@
-import { backURL, Post } from "../../globalVars/globals";
+import { backURL, Post, postImagesPath } from "../../globalVars/globals";
 import { Header } from "../../components/Header";
 import Vote from "../../components/Vote";
 import Link from "next/link";
@@ -37,6 +37,12 @@ function PostPage(data: postProp) {
             <div id="postBody" className=" p-5 flex flex-col items-center">
               <div className="border-2 border-gray-900 w-full p-3">
                 <p>{post.content}</p>
+                {/* CHNL img looks for index 0, hard code bruh */}
+                <img
+                  src={
+                    post.images[0] ? `${postImagesPath + post.images[0]}` : ""
+                  }
+                />
               </div>
             </div>
             {/* {VOTE HERE} */}

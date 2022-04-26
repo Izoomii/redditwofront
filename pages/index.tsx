@@ -28,7 +28,6 @@ function IndexPage() {
         withCredentials: true,
       })
       .then(({ data }) => {
-        console.log(data);
         setPosts(data);
       });
     return data;

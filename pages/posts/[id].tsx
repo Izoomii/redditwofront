@@ -45,7 +45,6 @@ function PostPage(data: postProp) {
                 />
               </div>
             </div>
-            {/* {VOTE HERE} */}
             <Vote post={post} withVotes={true} />
           </div>
         </div>

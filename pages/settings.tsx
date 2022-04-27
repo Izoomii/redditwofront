@@ -146,7 +146,7 @@ export default function Settings(props: any) {
                         <button
                           disabled={disabled}
                           onClick={() => {
-                            setPwPopupShow(!pwPopupShow);
+                            setPwPopupShow(!pwPopupShow); // maybe change this one to true only ? IMPL
                           }}
                           className="bg-blue-500 rounded-sm w-full disabled:opacity-50"
                         >

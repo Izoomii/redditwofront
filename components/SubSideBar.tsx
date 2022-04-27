@@ -2,12 +2,16 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { backURL, Sub } from "../globalVars/globals";
+import Popup from "./Popup";
 import { Sidebar } from "./Sidebar";
 import SubInfo from "./SubInfo";
+import SubSettings from "./SubSettings";
 
 export default function SubSideBar(props: any) {
   const sub = props.sub as Sub;
   const [subscriptionStatus, setSubscriptionStatus] = useState("Subscribe");
+  const editable = props.editable as boolean;
+  const [showSubSettingsPopup, setShowSubSettingsPopup] = useState(false);
 
   const subscribe = () => {
     axios
@@ -28,7 +32,6 @@ export default function SubSideBar(props: any) {
     axios
       .get(`${backURL}/subs/subscribe/${sub.id}`, { withCredentials: true })
       .then(({ data }) => {
-        console.log(data);
         setSubscriptionStatus(
           data.subscribed === true ? "Subscribed" : "Subscribe"
         );
@@ -56,6 +59,26 @@ export default function SubSideBar(props: any) {
             Create Post
           </button>
         </Link>
+        <div>
+          {editable ? (
+            <button
+              onClick={() => {
+                setShowSubSettingsPopup(true);
+              }}
+              className="p-1 bg-red-600"
+            >
+              Edit Your Sub
+            </button>
+          ) : null}
+        </div>
+        <Popup
+          show={showSubSettingsPopup}
+          onClose={() => {
+            setShowSubSettingsPopup(false);
+          }}
+        >
+          <SubSettings sub={sub} />
+        </Popup>
       </div>
     </Sidebar>
   );

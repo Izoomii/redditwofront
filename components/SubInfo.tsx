@@ -8,9 +8,8 @@ export default function SubInfo(props: any) {
   useEffect(() => {
     if (sub.image) {
       setSubImage(subImagesPath + sub.image);
-      console.log(sub.image);
     }
-  });
+  }, []);
 
   return (
     <div className="text-center text-white">

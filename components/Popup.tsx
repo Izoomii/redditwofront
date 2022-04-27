@@ -1,4 +1,6 @@
 export default function Popup(props: any) {
+  //uses two props, "show" which is boolean and "onClose" which you can define as a useState that turns "show" into false
+
   return (props.show as boolean) ? (
     <div
       id="mainDiv"

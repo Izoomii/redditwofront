@@ -51,9 +51,11 @@ export default function SubSideBar(props: any) {
         >
           {subscriptionStatus}
         </button>
-        <div className="p-2 my-3 bg-blue-600 text-center">
-          <Link href={`/createpost?sub=${sub.name}`}>Create Post</Link>
-        </div>
+        <Link href={`/createpost?sub=${sub.name}`}>
+          <button className="p-2 my-3 w-full bg-blue-600 text-center">
+            Create Post
+          </button>
+        </Link>
       </div>
     </Sidebar>
   );

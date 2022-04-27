@@ -10,7 +10,7 @@ export default function AvatarUpdate() {
   const inputRef = useRef<any>(); //CHNL
 
   const changeAvatar = async () => {
-    if (selectedImage === "") return console.log("No file selected");
+    // if (selectedImage === "") return console.log("No file selected");
     const formData = new FormData();
     formData.append("avatar", selectedImage);
     axios

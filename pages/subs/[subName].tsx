@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "../../components/Container";
 import { Header } from "../../components/Header";
 import { Main } from "../../components/Main";
+import { PostComponent } from "../../components/PostComponent";
 import { Sidebar } from "../../components/Sidebar";
 import SubInfo from "../../components/SubInfo";
 import SubSideBar from "../../components/SubSideBar";
@@ -16,17 +17,9 @@ export default function SubPage(props: any) {
         <div className="grow bg-gray-800">
           {sub.posts.map((e, i) => {
             return (
-              <Link key={i} href={`/posts/${e.id}`}>
-                <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear">
-                  <h1 className="text-2xl text-blue-400 text-center">
-                    {e.title}
-                  </h1>
-                  <h1 className="text-xl text-blue-300 text-center">
-                    <i>by {e.authorName}</i>
-                  </h1>
-                  <p className="text-center">{e.content}</p>
-                </div>
-              </Link>
+              <div key={i}>
+                <PostComponent post={e} withVotes={true} />
+              </div>
             );
           })}
         </div>

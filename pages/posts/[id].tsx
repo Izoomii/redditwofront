@@ -71,7 +71,7 @@ export async function getStaticPaths() {
 //improve this IMPL
 export async function getStaticProps(props: any) {
   const id = props.params.id;
-  const res = await fetch(backURL + "/posts/" + id); //CHNL
+  const res = await fetch(`${backURL}/posts/${id}`); //CHNL
   const data = await res.json();
 
   return {

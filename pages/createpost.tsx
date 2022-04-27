@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "../components/Container";
-import { Header } from "../components/Header";
 import { backURL } from "../globalVars/globals";
 
 export default function CreatePost() {
@@ -15,19 +14,26 @@ export default function CreatePost() {
   const [content, setContent] = useState("");
   const [update, setUpdate] = useState("");
 
+  const [selectedImage, setSelectedImage] = useState("");
+  const imageRef = useRef<any>();
+
   useEffect(() => {
     setSubName(subNameFromQuery ? subNameFromQuery : "");
   }, []);
 
-  //just need to figure out how to send user info with this or keep cookie alive for request, or just remove all tha bs and give nickname with text or some shit
   const submitPost = async () => {
     let data = { subName, title, content };
+    const formData = new FormData();
+    formData.append("subName", subName);
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("image", selectedImage);
     if (title == "") return setUpdate("No title given.");
     if (subName == "") return setUpdate("No sub given.");
     axios
-      .post(backURL + "/posts/createpost", data, {
+      .post(backURL + "/posts/createpost", formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
         withCredentials: true,
       })
@@ -77,6 +83,17 @@ export default function CreatePost() {
                 setContent(event.target.value);
               }}
             ></textarea>
+          </label>
+          <label>
+            Image
+            <input
+              name="image"
+              type={"file"}
+              onChange={() => {
+                setSelectedImage(imageRef.current.files[0]);
+              }}
+              ref={imageRef}
+            />
           </label>
           <br />
           <br />

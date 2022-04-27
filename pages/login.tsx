@@ -71,7 +71,8 @@ export default function Login() {
         if (data.authenticate == false) {
           setAccountCheck(data.message);
         } else {
-          router.push("/");
+          //this triggers a hard refresh to update header
+          window.location.href = "/";
           console.log(data);
         }
       });

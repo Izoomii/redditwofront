@@ -31,7 +31,7 @@ export const Header = () => {
         setNickname(user.nickname);
         setAvatar(user.avatar as string | null);
       });
-    console.log("header useEffect triggered");
+    // console.log("header useEffect triggered");
   }, []);
 
   return (

@@ -37,9 +37,9 @@ export default function Settings(props: any) {
         }
       )
       .then(({ data }) => {
+        window.location.href = "/login";
         console.log(data);
       });
-    router.push("/login");
   };
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { Container } from "../components/Container";
 import { Header } from "../components/Header";
 
 interface testProps {
@@ -6,10 +7,9 @@ interface testProps {
 
 export default function TestPage(props: testProps) {
   return (
-    <div>
-      <Header />
+    <Container>
       <div></div>
-    </div>
+    </Container>
   );
 }
 

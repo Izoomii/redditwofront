@@ -27,22 +27,19 @@ export function Search() {
   }, [query]);
 
   return (
-    <Page>
-      <Header />
-      <Container>
-        <Main>
-          <div>
-            {posts.map((e, i) => {
-              return (
-                <div key={i}>
-                  <PostComponent post={e} withVotes={true} />
-                </div>
-              );
-            })}
-          </div>
-        </Main>
-      </Container>
-    </Page>
+    <Container>
+      <Main>
+        <div>
+          {posts.map((e, i) => {
+            return (
+              <div key={i}>
+                <PostComponent post={e} withVotes={true} />
+              </div>
+            );
+          })}
+        </div>
+      </Main>
+    </Container>
   );
 }
 

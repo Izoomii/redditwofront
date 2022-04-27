@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Container } from "../components/Container";
 import { Header } from "../components/Header";
 import { backURL } from "../globalVars/globals";
 
@@ -36,8 +37,7 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="w-full h-screen">
-      <Header />
+    <Container>
       <div className="flex flex-col justify-center w-full h-full bg-gray-700">
         <div
           onFocus={() => {
@@ -91,6 +91,6 @@ export default function CreatePost() {
           <p>{update}</p>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

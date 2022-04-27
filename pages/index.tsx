@@ -49,33 +49,20 @@ function IndexPage() {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          click();
-        }}
-        className="fixed w-20 h-10 top-1/2 right-0 bg-blue-500 rounded-sm hover:bg-blue-700"
-      >
-        Button
-      </button>
-      <Page>
-        <Header />
-        <Container>
-          <Main>
-            {posts.map((e, i) => {
-              return (
-                <div key={i}>
-                  <PostComponent post={e} withVotes={true} />
-                </div>
-              );
-            })}
-          </Main>
-          <Sidebar>
-            <SubList />
-          </Sidebar>
-        </Container>
-      </Page>
-    </div>
+    <Container>
+      <Main>
+        {posts.map((e, i) => {
+          return (
+            <div key={i}>
+              <PostComponent post={e} withVotes={true} />
+            </div>
+          );
+        })}
+      </Main>
+      <Sidebar>
+        <SubList />
+      </Sidebar>
+    </Container>
   );
 }
 

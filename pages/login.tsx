@@ -2,6 +2,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Container } from "../components/Container";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
 import { backURL, showPw } from "../globalVars/globals";
@@ -77,77 +78,74 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <Page>
-        <Header />
-        <div className="flex w-full flex-grow bg-gray-800 items-center justify-center">
-          <div
-            className={
-              "flex w-1/4 h-1/4 bg-gray-700 justify-center items-center"
-              //  + " focus-within:h-1/3 hover:w-1/3 transition-all ease-in-out duration-300"
-            }
-          >
-            <div className="w-fit p-2 ">
-              <div className="bg-white p-2 border-2 border-black">
-                <label>
-                  Nickname:
-                  <input
-                    className="m-2 mt-0"
-                    name="nickname"
-                    value={nickname}
-                    placeholder="Nickname"
-                    onFocus={() => {
-                      setAccountCheck("");
-                    }}
-                    onChange={(event) => {
-                      setNickname(event.target.value);
-                    }}
-                  />
-                </label>
-                <br />
-                <label>
-                  Password:
-                  <input
-                    className="m-2 mt-0"
-                    name="password"
-                    type={showPw(showPassword)}
-                    value={password}
-                    placeholder="Password"
-                    onChange={(event) => {
-                      setPassword(event.target.value);
-                    }}
-                    onFocus={() => {
-                      checkUser();
-                    }}
-                  />
-                </label>
-                <button
-                  onClick={() => {
-                    setShowPassword(!showPassword);
+    <Container>
+      <div className="flex w-full flex-grow bg-gray-800 items-center justify-center">
+        <div
+          className={
+            "flex w-1/4 h-1/4 bg-gray-700 justify-center items-center"
+            //  + " focus-within:h-1/3 hover:w-1/3 transition-all ease-in-out duration-300"
+          }
+        >
+          <div className="w-fit p-2 ">
+            <div className="bg-white p-2 border-2 border-black">
+              <label>
+                Nickname:
+                <input
+                  className="m-2 mt-0"
+                  name="nickname"
+                  value={nickname}
+                  placeholder="Nickname"
+                  onFocus={() => {
+                    setAccountCheck("");
                   }}
-                >
-                  <i>Show</i>
-                </button>
-                <br />
-                <button
-                  className="bg-blue-300 w-full hover:bg-blue-400"
-                  onClick={() => {
-                    loginUser();
+                  onChange={(event) => {
+                    setNickname(event.target.value);
                   }}
-                >
-                  Connect
-                </button>
-              </div>
-              <div className="text-center text-blue-100">
-                <Link href={"/createuser"}>Create an account</Link>
-              </div>
-              <div className="fixed bottom-0 m-2 bg-gray-800 text-white">
-                <p>{accountCheck}</p>
-              </div>
+                />
+              </label>
+              <br />
+              <label>
+                Password:
+                <input
+                  className="m-2 mt-0"
+                  name="password"
+                  type={showPw(showPassword)}
+                  value={password}
+                  placeholder="Password"
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                  onFocus={() => {
+                    checkUser();
+                  }}
+                />
+              </label>
+              <button
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              >
+                <i>Show</i>
+              </button>
+              <br />
+              <button
+                className="bg-blue-300 w-full hover:bg-blue-400"
+                onClick={() => {
+                  loginUser();
+                }}
+              >
+                Connect
+              </button>
+            </div>
+            <div className="text-center text-blue-100">
+              <Link href={"/createuser"}>Create an account</Link>
+            </div>
+            <div className="fixed bottom-0 m-2 bg-gray-800 text-white">
+              <p>{accountCheck}</p>
             </div>
           </div>
         </div>
-      </Page>
-    </div>
+      </div>
+    </Container>
   );
 }

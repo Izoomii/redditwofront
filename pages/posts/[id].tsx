@@ -2,6 +2,7 @@ import { backURL, Post, postImagesPath } from "../../globalVars/globals";
 import { Header } from "../../components/Header";
 import Vote from "../../components/Vote";
 import Link from "next/link";
+import { Container } from "../../components/Container";
 
 interface postProp {
   data: {
@@ -17,8 +18,7 @@ function PostPage(data: postProp) {
   const post = data.data.post;
 
   return (
-    <div className="w-full bg-gray-900 flex flex-col h-screen">
-      <Header></Header>
+    <Container>
       <div className="w-full grow flex flex-col">
         <div className="bg-gray-700 m-3 p-4 grow flex">
           <div className="w-3/4 bg-gray-600">
@@ -50,7 +50,7 @@ function PostPage(data: postProp) {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

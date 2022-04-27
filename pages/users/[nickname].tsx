@@ -16,23 +16,20 @@ function Account(props: any) {
   const userInfo = props.data as User;
   console.log(props, props.data);
   return (
-    <Page>
-      <Header></Header>
-      <Container>
-        <Main>
-          {userInfo.posts.map((e, i) => {
-            return (
-              <div key={i}>
-                <PostComponent post={e} withVotes={true} />
-              </div>
-            );
-          })}
-        </Main>
-        <Sidebar>
-          <AccountInfo userInfo={userInfo} />
-        </Sidebar>
-      </Container>
-    </Page>
+    <Container>
+      <Main>
+        {userInfo.posts.map((e, i) => {
+          return (
+            <div key={i}>
+              <PostComponent post={e} withVotes={true} />
+            </div>
+          );
+        })}
+      </Main>
+      <Sidebar>
+        <AccountInfo userInfo={userInfo} />
+      </Sidebar>
+    </Container>
   );
 }
 

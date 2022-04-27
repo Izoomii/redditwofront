@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Header } from "../../components/Header";
 import { backURL, Sub } from "../../globalVars/globals";
 import axios from "axios";
+import { Container } from "../../components/Container";
 
 interface subProps {
   data: {
@@ -12,8 +13,7 @@ interface subProps {
 export default function Subreddits(props: subProps) {
   const subs = props.data;
   return (
-    <div className="h-screen flex flex-col">
-      <Header></Header>
+    <Container>
       <div className="grow bg-gray-800 flex flex-col">
         <div className="p-2">
           {subs.map((e, i) => {
@@ -29,7 +29,7 @@ export default function Subreddits(props: subProps) {
           })}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

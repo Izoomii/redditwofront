@@ -31,19 +31,20 @@ export const Header = () => {
         setNickname(user.nickname);
         setAvatar(user.avatar as string | null);
       });
+    console.log("header useEffect triggered");
   }, []);
 
   return (
     <div id="header" className="bg-blue-400 w-100 h-10 flex ">
       <div className="flex w-1/4 h-100 justify-around">
         <div className="grid place-items-center text-xl font-bold hover:text-blue-800 transition-all ease-linear duration-100">
-          <a href="/">RedditTwo</a>
+          <Link href="/">RedditTwo</Link>
         </div>
         <div className="grid place-items-center">
-          <a href="/subs">All Subs</a>
+          <Link href="/subs">All Subs</Link>
         </div>
         <div className="grid place-items-center">
-          <a href="/all">r/All</a>
+          <Link href="/all">r/All</Link>
         </div>
       </div>
       <div className="flex h-100 w-2/4 p-1">

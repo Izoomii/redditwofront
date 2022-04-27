@@ -88,111 +88,104 @@ export default function CreateUser() {
   };
 
   return (
-    <div>
-      <Page>
-        <Header />
-        <Container>
-          <Main>
-            <div className="grow flex flex-col items-center">
-              <div className="w-2/3 bg-gray-700 text-black">
-                <table className="w-full table-auto">
-                  <tbody>
-                    <tr>
-                      <td>Nickname: </td>
-                      <td>
-                        <input
-                          value={nickname}
-                          onChange={(event) => {
-                            setNickname(event.target.value);
-                          }}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Email: </td>
-                      <td>
-                        <input
-                          value={email}
-                          onChange={(event) => {
-                            setEmail(event.target.value);
-                          }}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Password: </td>
-                      <td>
-                        <input
-                          value={password}
-                          type={showPw(showOriginalPw)}
-                          onChange={(event) => {
-                            setPassword(event.target.value);
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            setShowOriginalPw(!showOriginalPw);
-                          }}
-                        >
-                          <i>Show</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Repeat Password: </td>
-                      <td>
-                        <input
-                          value={repeatPassword}
-                          type={showPw(showRepeatPw)}
-                          onChange={(event) => {
-                            setRepeatPassword(event.target.value);
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            setShowRepeatPw(!showRepeatPw);
-                          }}
-                        >
-                          <i>Show</i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>
-                        <p className="text-xs text-red-400 break-words">
-                          {alert}
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Select an Image: </td>
-                      <td>
-                        <input
-                          type="file"
-                          name="avatar"
-                          onChange={() => {
-                            setImage(imageRef.current.files[0]);
-                          }}
-                          ref={imageRef}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <button
-                  onClick={() => {
-                    submitInfo();
-                  }}
-                  className="p-2 bg-blue-900"
-                >
-                  Create Account
-                </button>
-              </div>
-            </div>
-          </Main>
-        </Container>
-      </Page>
-    </div>
+    <Container>
+      <Main>
+        <div className="grow flex flex-col items-center">
+          <div className="w-2/3 bg-gray-700 text-black">
+            <table className="w-full table-auto">
+              <tbody>
+                <tr>
+                  <td>Nickname: </td>
+                  <td>
+                    <input
+                      value={nickname}
+                      onChange={(event) => {
+                        setNickname(event.target.value);
+                      }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email: </td>
+                  <td>
+                    <input
+                      value={email}
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                      }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Password: </td>
+                  <td>
+                    <input
+                      value={password}
+                      type={showPw(showOriginalPw)}
+                      onChange={(event) => {
+                        setPassword(event.target.value);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        setShowOriginalPw(!showOriginalPw);
+                      }}
+                    >
+                      <i>Show</i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Repeat Password: </td>
+                  <td>
+                    <input
+                      value={repeatPassword}
+                      type={showPw(showRepeatPw)}
+                      onChange={(event) => {
+                        setRepeatPassword(event.target.value);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        setShowRepeatPw(!showRepeatPw);
+                      }}
+                    >
+                      <i>Show</i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <p className="text-xs text-red-400 break-words">{alert}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Select an Image: </td>
+                  <td>
+                    <input
+                      type="file"
+                      name="avatar"
+                      onChange={() => {
+                        setImage(imageRef.current.files[0]);
+                      }}
+                      ref={imageRef}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button
+              onClick={() => {
+                submitInfo();
+              }}
+              className="p-2 bg-blue-900"
+            >
+              Create Account
+            </button>
+          </div>
+        </div>
+      </Main>
+    </Container>
   );
 }

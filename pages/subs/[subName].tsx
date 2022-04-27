@@ -11,31 +11,28 @@ import { backURL, Post, Sub } from "../../globalVars/globals";
 export default function SubPage(props: any) {
   const sub = props.data as Sub;
   return (
-    <div className="h-screen flex flex-col">
-      <Header></Header>
-      <Container>
-        <Main>
-          <div className="grow bg-gray-800">
-            {sub.posts.map((e, i) => {
-              return (
-                <Link key={i} href={`/posts/${e.id}`}>
-                  <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear">
-                    <h1 className="text-2xl text-blue-400 text-center">
-                      {e.title}
-                    </h1>
-                    <h1 className="text-xl text-blue-300 text-center">
-                      <i>by {e.authorName}</i>
-                    </h1>
-                    <p className="text-center">{e.content}</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </Main>
-        <SubSideBar sub={sub} />
-      </Container>
-    </div>
+    <Container>
+      <Main>
+        <div className="grow bg-gray-800">
+          {sub.posts.map((e, i) => {
+            return (
+              <Link key={i} href={`/posts/${e.id}`}>
+                <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 transition-all ease-linear">
+                  <h1 className="text-2xl text-blue-400 text-center">
+                    {e.title}
+                  </h1>
+                  <h1 className="text-xl text-blue-300 text-center">
+                    <i>by {e.authorName}</i>
+                  </h1>
+                  <p className="text-center">{e.content}</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </Main>
+      <SubSideBar sub={sub} />
+    </Container>
   );
 }
 

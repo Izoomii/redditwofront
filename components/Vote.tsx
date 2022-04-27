@@ -38,7 +38,7 @@ export default function Vote(props: any) {
 
   useEffect(() => {
     fetchVotes();
-  });
+  }, []);
 
   return (
     <div className="flex flex-col items-center">

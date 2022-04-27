@@ -24,8 +24,13 @@ export default function SubList() {
 
   return (
     <div className="h-full w-full">
-      <div>
-        <Link href={"/subs"}>Subs:</Link>
+      <div className="flex">
+        <div className="w-1/2">
+          <Link href={"/subs"}>Subs:</Link>
+        </div>
+        <div className="grow bg-gray-600 text-gray-800 italic text-center rounded-md">
+          <Link href={"/createsub"}>Create a Sub</Link>
+        </div>
       </div>
       <div>
         {subsList.map((e, i) => {

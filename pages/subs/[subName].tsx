@@ -27,7 +27,7 @@ export default function SubPage(props: any) {
           }
         }
       });
-  });
+  }, []);
 
   return (
     <Container>

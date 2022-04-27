@@ -13,8 +13,11 @@ export default function SubInfo(props: any) {
 
   return (
     <div className="text-center text-white">
-      <div>
-        <img src={subImage} className="object-contain h-full rounded-full" />
+      <div className="flex h-32 justify-center">
+        <img
+          src={subImage}
+          className="object-cover h-full aspect-square rounded-full"
+        />
       </div>
       <div className="text-2xl">{sub.name}</div>
       <div className="text-sm text-gray-600">

@@ -31,6 +31,7 @@ export default function AvatarUpdate() {
       <input
         type="file"
         name="newavatar"
+        accept="image/*"
         onChange={() => setSelectedImage(inputRef.current.files[0])}
         ref={inputRef}
       />

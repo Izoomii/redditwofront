@@ -1,33 +1,13 @@
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { Container } from "../../components/Container";
-import { Header } from "../../components/Header";
 import { Main } from "../../components/Main";
 import { PostComponent } from "../../components/PostComponent";
-import { Sidebar } from "../../components/Sidebar";
-import SubInfo from "../../components/SubInfo";
 import SubSideBar from "../../components/SubSideBar";
 import { backURL, Post, Sub, User } from "../../globalVars/globals";
 
 export default function SubPage(props: any) {
   const sub = props.data as Sub;
-  const [editable, setEditable] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get(`${backURL}/users/verifyme`, {
-        withCredentials: true,
-      })
-      .then(({ data }) => {
-        const user = data.user as User;
-        if (user) {
-          if (user.nickname === sub.ownerName) {
-            setEditable(true);
-          }
-        }
-      });
-  }, []);
 
   return (
     <Container>
@@ -42,7 +22,7 @@ export default function SubPage(props: any) {
           })}
         </div>
       </Main>
-      <SubSideBar sub={sub} editable={editable} />
+      <SubSideBar sub={sub} />
     </Container>
   );
 }

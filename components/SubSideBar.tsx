@@ -1,7 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { backURL, Sub } from "../globalVars/globals";
+import { backURL, Sub, User } from "../globalVars/globals";
 import Popup from "./Popup";
 import { Sidebar } from "./Sidebar";
 import SubInfo from "./SubInfo";
@@ -10,8 +10,9 @@ import SubSettings from "./SubSettings";
 export default function SubSideBar(props: any) {
   const sub = props.sub as Sub;
   const [subscriptionStatus, setSubscriptionStatus] = useState("Subscribe");
-  const editable = props.editable as boolean;
   const [showSubSettingsPopup, setShowSubSettingsPopup] = useState(false);
+
+  const [editable, setEditable] = useState(false);
 
   const subscribe = () => {
     axios
@@ -38,8 +39,24 @@ export default function SubSideBar(props: any) {
       });
   };
 
+  const checkOwnership = () => {
+    axios
+      .get(`${backURL}/users/verifyme`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        const user = data.user as User;
+        if (user) {
+          if (user.nickname === sub.ownerName) {
+            setEditable(true);
+          }
+        }
+      });
+  };
+
   useEffect(() => {
     checkSubscription();
+    checkOwnership();
   }, []);
 
   return (

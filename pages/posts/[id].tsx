@@ -1,21 +1,37 @@
-import { backURL, Post, postImagesPath } from "../../globalVars/globals";
+import { backURL, Post, postImagesPath, User } from "../../globalVars/globals";
 import { Header } from "../../components/Header";
 import Vote from "../../components/Vote";
 import Link from "next/link";
 import { Container } from "../../components/Container";
+import Popup from "../../components/Popup";
+import PostSettings from "../../components/PostSettings";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface postProp {
-  data: {
-    post: Post;
-  };
+  post: Post;
 }
-
 interface idList {
   id: string;
 }
 
 function PostPage(data: postProp) {
-  const post = data.data.post;
+  const post = data.post;
+  const [editable, setEditable] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${backURL}/users/verifyme`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        const user = data.user as User;
+        if (user) {
+          if (user.nickname === post.authorName) return setEditable(true);
+        }
+      });
+  }, []);
 
   return (
     <Container>
@@ -46,6 +62,26 @@ function PostPage(data: postProp) {
               </div>
             </div>
             <Vote post={post} withVotes={true} />
+            {editable ? (
+              <div>
+                <Popup
+                  show={showPopup}
+                  onClose={() => {
+                    setShowPopup(false);
+                  }}
+                >
+                  <PostSettings post={post} />
+                </Popup>
+                <button
+                  className="p-2 bg-blue-600"
+                  onClick={() => {
+                    setShowPopup(true);
+                  }}
+                >
+                  Edit Post
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -55,8 +91,9 @@ function PostPage(data: postProp) {
 
 export async function getStaticPaths() {
   const results = await fetch(backURL + "/posts"); //CHNL
-  const data: Promise<idList[]> = results.json();
-  const paths = (await data).map((elem) => {
+  const data: idList[] = await results.json();
+  console.log(data);
+  const paths = data.map((elem) => {
     return {
       params: { id: elem.id.toString() }, //CHNL
     };
@@ -74,7 +111,7 @@ export async function getStaticProps(props: any) {
   const data = await res.json();
 
   return {
-    props: { data },
+    props: data,
   };
 }
 

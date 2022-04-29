@@ -22,7 +22,22 @@ export default function AvatarUpdate() {
       })
       .then(({ data }) => {
         console.log(data);
-        if (data.updated) router.push("/");
+        if (data.updated) window.location.href = "/";
+      });
+  };
+
+  const deleteAvatar = () => {
+    axios
+      .post(
+        `${backURL}/users/deleteavatar`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        window.location.href = "/settings";
       });
   };
 
@@ -42,6 +57,14 @@ export default function AvatarUpdate() {
         }}
       >
         Change avatar
+      </button>
+      <button
+        className="p-2 m-2 bg-red-600"
+        onClick={() => {
+          deleteAvatar();
+        }}
+      >
+        Delete Avatar
       </button>
     </div>
   );

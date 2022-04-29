@@ -6,7 +6,7 @@ export default function Avatar(props: any) {
   const [avatar, setAvatar] = useState(avatarsPath + "0.png");
   useEffect(() => {
     if (userAvatar !== null) setAvatar(avatarsPath + userAvatar);
-  }, []);
+  }, [userAvatar]);
 
   return (
     <div className="h-full aspect-square">

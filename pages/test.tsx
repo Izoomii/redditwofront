@@ -13,11 +13,15 @@ export default function TestPage(props: testProps) {
     formData.append("bruh2", "idk");
 
     axios
-      .post(`${backURL}/test/post/lookback`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        `${backURL}/test/post/lookback`,
+        { idk: "intentionally making a 500 error" },
+        {
+          // headers: {
+          //   "Content-Type": "multipart/form-data",
+          // },
+        }
+      )
       .then(({ data }) => {
         console.log(data);
       });

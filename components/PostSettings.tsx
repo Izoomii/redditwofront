@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { backURL, Post } from "../globalVars/globals";
@@ -28,7 +28,7 @@ export default function PostSettings(props: any) {
           "Content-Type": "Multipart/form-data",
         },
       })
-      .then(({ data }) => {
+      .then(({ data }: AxiosResponse<any>) => {
         router.reload();
       });
   };

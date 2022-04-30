@@ -53,37 +53,23 @@ export default function CreateUser() {
 
   const submitInfo = async () => {
     if (!checkInfo()) return;
+    const newUserInfo = new FormData();
+    newUserInfo.append("nickname", nickname);
+    newUserInfo.append("email", email);
+    newUserInfo.append("password", password);
+    newUserInfo.append("repeatPassword", repeatPassword);
+    if (image) newUserInfo.append("avatar", image);
     axios
-      .post(
-        backURL + "/users/createuser",
-        {
-          nickname,
-          email,
-          password,
-          repeatPassword,
+      .post(`${backURL}/users/createuser`, newUserInfo, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "Multipart/form-data",
         },
-        {
-          withCredentials: true,
-        }
-      )
+      })
       .then(({ data }) => {
         console.log(data);
         setAlert(data.message);
-        //change avatar here
-        if (!image) return router.push("/");
-        const formData = new FormData();
-        formData.append("avatar", image);
-        axios
-          .post(`${backURL}/users/updateavatar`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-            withCredentials: true,
-          })
-          .then(({ data }) => {
-            console.log(data);
-            if (data.updated) router.push("/"); // add something if error happens IMPL
-          });
+        window.location.href = "/";
       });
   };
 

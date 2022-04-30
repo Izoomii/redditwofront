@@ -2,10 +2,11 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { VoteType, backURL, Post } from "../globalVars/globals";
 
-interface voteCount {
+interface votes {
   upvotes: number;
   downvotes: number;
   total: number;
+  votetype?: string;
 }
 
 export default function Vote(props: any) {
@@ -30,9 +31,24 @@ export default function Vote(props: any) {
   const fetchVotes = () => {
     if (!withVotes) return setVotes("Vote");
     axios
-      .get(backURL + `/posts/${post.id}/votecount`)
-      .then(({ data }: AxiosResponse<voteCount>) => {
-        setVotes(`[${data.total}] -> +${data.upvotes}/-${data.downvotes}`);
+      .get(backURL + `/posts/${post.id}/votecount`, {
+        withCredentials: true,
+      })
+      .then(({ data }: AxiosResponse<votes>) => {
+        if (!data.votetype || data.votetype === null) {
+          setVotes(`[${data.total}] -> +${data.upvotes}/-${data.downvotes}`);
+        } else {
+          const votetype = data.votetype as VoteType;
+          if (votetype === "UP") {
+            setVotes(
+              `[${data.total}] -> ((+${data.upvotes}))/-${data.downvotes}`
+            );
+          } else {
+            setVotes(
+              `[${data.total}] -> +${data.upvotes}/((-${data.downvotes}))`
+            );
+          }
+        }
       });
   };
 

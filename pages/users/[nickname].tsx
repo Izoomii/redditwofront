@@ -13,12 +13,12 @@ interface NicknameList {
 }
 
 function Account(props: any) {
-  const userInfo = props.data as User;
+  const user = props.data as User;
   console.log(props, props.data);
   return (
     <Container>
       <Main>
-        {userInfo.posts.map((e, i) => {
+        {user.posts.map((e, i) => {
           return (
             <div key={i}>
               <PostComponent post={e} withVotes={true} />
@@ -27,7 +27,7 @@ function Account(props: any) {
         })}
       </Main>
       <Sidebar>
-        <AccountInfo userInfo={userInfo} />
+        <AccountInfo user={user} />
       </Sidebar>
     </Container>
   );

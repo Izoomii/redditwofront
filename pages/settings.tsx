@@ -1,15 +1,19 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import AccountInfo from "../components/AccountInfo";
 import AvatarUpdate from "../components/AvatarUpdate";
 import { Container } from "../components/Container";
 import { Header } from "../components/Header";
 import { Page } from "../components/Page";
 import PasswordReset from "../components/PasswordReset";
 import Popup from "../components/Popup";
+import { Sidebar } from "../components/Sidebar";
 import { backURL, User } from "../globalVars/globals";
 
-export default function Settings(props: any) {
+export default function Settings() {
+  const [user, setUser] = useState<User | null>(null);
+
   const [disabled, setDisabled] = useState(true);
   const [originalEmail, setOriginalEmail] = useState("");
   const [originalNickname, setOriginalNickname] = useState("");
@@ -51,6 +55,8 @@ export default function Settings(props: any) {
         .then(({ data }) => {
           const user = data.user as User;
           if (!user) return router.push("/login");
+          setUser(user);
+          //CHNL
           setOriginalNickname(user.nickname);
           setOriginalEmail(user.email);
           setOriginalName(user.name === null ? "" : (user.name as string));
@@ -203,6 +209,7 @@ export default function Settings(props: any) {
               </button>
             </div>
           </div>
+          <Sidebar>{user ? <AccountInfo user={user} /> : null}</Sidebar>
         </div>
       </div>
     </Container>

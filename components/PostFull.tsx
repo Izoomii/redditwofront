@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { backURL, Post, postImagesPath, User } from "../globalVars/globals";
 import Popup from "./Popup";
 import PostSettings from "./PostSettings";
+import SavedComponent from "./savedComponent";
 import Vote from "./Vote";
 
 export default function PostFull(props: any) {
@@ -44,6 +45,7 @@ export default function PostFull(props: any) {
         </div>
       </div>
       <Vote post={post} withVotes={true} />
+      <SavedComponent post={post} />
       {editable ? (
         <div>
           <Popup

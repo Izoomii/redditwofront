@@ -14,6 +14,7 @@ export interface User {
   avatar?: string;
   posts: Post[];
   subscriptions: Subscription[];
+  comments: Comment[];
 }
 
 export interface Post {
@@ -28,6 +29,7 @@ export interface Post {
   published: boolean;
   author: User;
   authorName: string | null;
+  comments: Comment[];
 }
 
 export interface Sub {
@@ -39,6 +41,15 @@ export interface Sub {
   owner: User;
   ownerName: string;
   subscriptions: Subscription[];
+}
+
+export interface Comment {
+  id: string;
+  owner: User;
+  ownerName: string;
+  post: Post;
+  postId: string;
+  content: string;
 }
 
 export interface Subscription {

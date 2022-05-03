@@ -2,6 +2,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { backURL, Post, postImagesPath, User } from "../globalVars/globals";
+import CommentsList from "./CommentsList";
 import Popup from "./Popup";
 import PostSettings from "./PostSettings";
 import SavedComponent from "./savedComponent";
@@ -66,6 +67,7 @@ export default function PostFull(props: any) {
           </button>
         </div>
       ) : null}
+      <CommentsList post={post} />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { backURL, Post } from "../globalVars/globals";
 import SubList from "../components/SubList";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 interface postsProp {
   data: Post[];
@@ -22,13 +23,17 @@ interface postsProp {
 function IndexPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
+  const router = useRouter();
+
   const fetchFeed = async () => {
     const data = await axios
       .get(`${backURL}`, {
         withCredentials: true,
       })
       .then(({ data }) => {
-        setPosts(data);
+        const posts = data as Post[];
+        if (posts.length === 0) return router.push("/all");
+        setPosts(posts);
       });
     return data;
   };

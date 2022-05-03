@@ -33,7 +33,8 @@ export default function SubSettings(props: any) {
         },
       })
       .then(({ data }) => {
-        router.push(`/subs/${name}`);
+        // router.push(`/subs/${name}`);
+        window.location.href = `/subs/${name}`;
       });
   };
 

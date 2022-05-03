@@ -45,6 +45,8 @@ export default function CreateUser() {
       setAlert(
         "Password must be a combination of at least 8 lowercase and uppercase letters, digits and special characters."
       );
+      setPassword("");
+      setRepeatPassword("");
       return false;
     }
     setAlert("");
@@ -69,7 +71,13 @@ export default function CreateUser() {
       .then(({ data }) => {
         console.log(data);
         setAlert(data.message);
-        window.location.href = "/";
+        //only redirect on successful creation
+        if (data.user) {
+          window.location.href = "/";
+        } else {
+          setPassword("");
+          setRepeatPassword("");
+        }
       });
   };
 

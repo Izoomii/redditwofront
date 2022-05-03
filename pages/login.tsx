@@ -70,6 +70,7 @@ export default function Login() {
       .then(({ data }) => {
         if (data.authenticate == false) {
           setAccountCheck(data.message);
+          setPassword("");
         } else {
           //this triggers a hard refresh to update header
           window.location.href = "/";

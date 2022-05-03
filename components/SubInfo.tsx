@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Sub, subImagesPath } from "../globalVars/globals";
 
@@ -21,7 +22,9 @@ export default function SubInfo(props: any) {
       </div>
       <div className="text-2xl">{sub.name}</div>
       <div className="text-sm text-gray-600">
-        <i>Owned by {sub.ownerName}</i>
+        <Link href={`/users/${sub.ownerName}`}>
+          <i>Owned by {sub.ownerName}</i>
+        </Link>
       </div>
       <div className="text-l">
         <i>

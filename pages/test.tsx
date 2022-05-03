@@ -1,27 +1,21 @@
 import axios from "axios";
+import { useRef, useState } from "react";
 import { Container } from "../components/Container";
 import { backURL } from "../globalVars/globals";
 
-interface testProps {
-  props: object;
-}
+export default function TestPage(props: any) {
+  const [selectedImage, setSelectedImage] = useState("");
+  const imageRef = useRef<any>();
 
-export default function TestPage(props: testProps) {
   const testRequest = () => {
     const formData = new FormData();
-    formData.append("thing1", "bruh");
-    formData.append("bruh2", "idk");
-
+    formData.append("image", selectedImage);
     axios
-      .post(
-        `${backURL}/test/post/lookback`,
-        { idk: "intentionally making a 500 error" },
-        {
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
-        }
-      )
+      .post(`${backURL}/test/post/lookback`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(({ data }) => {
         console.log(data);
       });
@@ -29,6 +23,14 @@ export default function TestPage(props: testProps) {
 
   return (
     <Container>
+      <input
+        type={"file"}
+        ref={imageRef}
+        onChange={() => {
+          setSelectedImage(imageRef.current.files[0]);
+        }}
+      />
+
       <button
         onClick={() => {
           testRequest();

@@ -23,6 +23,7 @@ export interface Post {
   subName: string;
   createdAt: Date;
   updatedAt: Date;
+  edited: boolean;
   title: string;
   content: string;
   images: string[];
@@ -49,6 +50,7 @@ export interface Comment {
   ownerName: string;
   post: Post;
   postId: string;
+  edited: boolean;
   content: string;
 }
 

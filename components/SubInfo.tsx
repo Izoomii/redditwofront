@@ -26,7 +26,7 @@ export default function SubInfo(props: any) {
           <i>Owned by {sub.ownerName}</i>
         </Link>
       </div>
-      <div className="text-l">
+      <div className="text-l whitespace-pre">
         <i>
           {sub.description ? sub.description : "Sub has no description yet"}
         </i>

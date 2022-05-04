@@ -38,12 +38,13 @@ export default function PostFull(props: any) {
       </div>
       <div id="postBody" className=" p-5 flex flex-col items-center">
         <div className="border-2 border-gray-900 w-full p-3">
-          <p>{post.content}</p>
+          <p className="whitespace-pre">{post.content}</p>
           {/* CHNL img looks for index 0, hard code bruh */}
           <img
             src={post.images[0] ? `${postImagesPath + post.images[0]}` : ""}
           />
         </div>
+        {post.edited ? <div>[Edited]</div> : null}
       </div>
       <Vote post={post} withVotes={true} />
       <SavedComponent post={post} />

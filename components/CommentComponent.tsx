@@ -22,6 +22,20 @@ export default function CommentComponent(props: any) {
       });
   };
 
+  const deleteComment = () => {
+    axios
+      .post(
+        `${backURL}/posts/${comment.id}/deletecomment`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+      });
+  };
+
   return (
     <div>
       <div>
@@ -40,6 +54,14 @@ export default function CommentComponent(props: any) {
               }}
             >
               Update
+            </button>
+            <button
+              onClick={() => {
+                deleteComment();
+              }}
+              className="p-1 bg-red-600"
+            >
+              Delete
             </button>
           </div>
         ) : (

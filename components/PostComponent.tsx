@@ -6,7 +6,6 @@ import Vote from "./Vote";
 export const PostComponent = (props: any) => {
   const post = props.post as Post;
   const withVotes = props.withVotes as boolean;
-  // const key = props.postKey as number;
   return (
     <div className="bg-gray-900 text-white p-2 m-1 hover:bg-gray-700 flex transition-all ease-linear">
       <div className="flex justify-center">

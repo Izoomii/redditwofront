@@ -1,12 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { backURL, Comment, Post } from "../globalVars/globals";
+import { backURL, Comment, Post, User } from "../globalVars/globals";
 import CommentComponent from "./CommentComponent";
 
 export default function CommentsList(props: any) {
   const post = props.post as Post;
   const [commentsList, setCommentsList] = useState<Comment[]>([]);
   const [comment, setComment] = useState("");
+  const [nickname, setNickname] = useState("");
+
+  const verifyUser = () => {
+    axios
+      .get(`${backURL}/users/verifyme`, {
+        withCredentials: true,
+      })
+      .then(({ data }) => {
+        const user = data.user as User;
+        if (user) setNickname(user.nickname);
+      });
+  };
 
   const submitComment = () => {
     if (!comment) return console.log("Comment cannot be empty");
@@ -31,17 +43,19 @@ export default function CommentsList(props: any) {
         withCredentials: true,
       })
       .then(({ data }) => {
-        setCommentsList(data);
+        const comments = data as Comment[];
+        if (comments.length != 0) setCommentsList(data);
       });
   };
 
   useEffect(() => {
+    verifyUser();
     fetchComments();
-  }, [post]);
+  }, []);
 
   return (
     <div>
-      <div className="border">
+      <div className="border m-2">
         Insert Comment:
         <input
           value={comment}
@@ -62,7 +76,7 @@ export default function CommentsList(props: any) {
         {commentsList.map((e, i) => {
           return (
             <div key={i}>
-              <CommentComponent comment={e} />
+              <CommentComponent comment={e} nickname={nickname} />
             </div>
           );
         })}

@@ -1,6 +1,6 @@
 export default function Popup(props: any) {
   //uses two props, "show" which is boolean and "onClose" which you can define as a useState that turns "show" into false
-  let show = props.show as boolean;
+  const show = props.show as boolean;
   const onClose = props.onClose as any; //CHNL
   return (show as boolean) ? (
     <div className="h-screen w-full bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center">

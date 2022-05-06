@@ -8,11 +8,14 @@ import { Header } from "../components/Header";
 import { Page } from "../components/Page";
 import PasswordReset from "../components/PasswordReset";
 import Popup from "../components/Popup";
+import PremiumSettings from "../components/PremiumSettings";
 import { Sidebar } from "../components/Sidebar";
 import { backURL, User } from "../globalVars/globals";
 
 export default function Settings() {
   const [user, setUser] = useState<User | null>(null);
+
+  const [alert, setAlert] = useState("");
 
   const [disabled, setDisabled] = useState(true);
   const [originalEmail, setOriginalEmail] = useState("");
@@ -91,8 +94,8 @@ export default function Settings() {
           }
         )
         .then(({ data }) => {
-          console.log(data);
-          if (data.updated) router.push("/");
+          if (data.updated === true) return router.push("/");
+          setAlert(data.message ? data.message : "");
         });
     }
   };
@@ -171,9 +174,12 @@ export default function Settings() {
                     </tr>
                   </tbody>
                 </table>
+                <p>{alert}</p>
                 <div className="flex w-full justify-between p-2">
                   <button
-                    className="bg-blue-600 rounded-sm w-24"
+                    className={`${
+                      disabled ? "bg-blue-600 " : "bg-red-600"
+                    } rounded-sm w-24`}
                     onClick={() => {
                       setDisabled(!disabled);
                       if (!disabled) {
@@ -209,7 +215,13 @@ export default function Settings() {
               </button>
             </div>
           </div>
-          <Sidebar>{user ? <AccountInfo user={user} /> : null}</Sidebar>
+          <Sidebar>
+            {user ? (
+              <div>
+                <AccountInfo user={user} /> <PremiumSettings user={user} />
+              </div>
+            ) : null}
+          </Sidebar>
         </div>
       </div>
     </Container>

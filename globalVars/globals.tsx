@@ -12,6 +12,7 @@ export interface User {
   password: string;
   name?: string;
   avatar?: string;
+  premium: Premium;
   posts: Post[];
   subscriptions: Subscription[];
   comments: Comment[];
@@ -52,6 +53,15 @@ export interface Comment {
   postId: string;
   edited: boolean;
   content: string;
+}
+
+interface Premium {
+  id: string;
+  user: User;
+  userId: string;
+  active: boolean;
+  expiration: Date; //not sure if this will work
+  renew: boolean;
 }
 
 export interface Subscription {

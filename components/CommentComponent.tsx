@@ -67,7 +67,12 @@ export default function CommentComponent(props: any) {
         ) : (
           <div>
             <div>
-              <b>{comment.ownerName}: </b>
+              <b>
+                {comment.ownerName === null
+                  ? "[deleted_user]"
+                  : comment.ownerName}
+                :{" "}
+              </b>
             </div>
             <div className="whitespace-pre">{comment.content}</div>
             {comment.edited ? <div>[Edited]</div> : null}

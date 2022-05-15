@@ -7,8 +7,6 @@ import { backURL } from "../globalVars/globals";
 export default function CreatePost() {
   const router = useRouter();
 
-  const subNameFromQuery = router.query.sub as string;
-
   const [title, setTitle] = useState("");
   const [subName, setSubName] = useState("");
   const [content, setContent] = useState("");
@@ -18,11 +16,11 @@ export default function CreatePost() {
   const imageRef = useRef<any>();
 
   useEffect(() => {
+    const subNameFromQuery = router.query.sub as string;
     setSubName(subNameFromQuery ? subNameFromQuery : "");
   }, []);
 
   const submitPost = async () => {
-    let data = { subName, title, content };
     const formData = new FormData();
     formData.append("subName", subName);
     formData.append("title", title);

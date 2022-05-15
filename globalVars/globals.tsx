@@ -16,6 +16,8 @@ export interface User {
   posts: Post[];
   subscriptions: Subscription[];
   comments: Comment[];
+  messages: Message[];
+  tickets: Ticket[];
 }
 
 export interface Post {
@@ -55,7 +57,7 @@ export interface Comment {
   content: string;
 }
 
-interface Premium {
+export interface Premium {
   id: string;
   user: User;
   userId: string;
@@ -67,6 +69,29 @@ interface Premium {
 export interface Subscription {
   userId: string;
   subId: string;
+}
+
+export interface Ticket {
+  user: User;
+  userId: string;
+  chat: Chat;
+  chatId: string;
+}
+
+export interface Chat {
+  id: string;
+  name?: string;
+  messages: Message[];
+  tickets: Ticket[];
+}
+
+export interface Message {
+  id: string;
+  owner: User;
+  ownerName: string;
+  chat: Chat;
+  chatId: string;
+  content: string;
 }
 
 export const showPw = (check: boolean) => {

@@ -9,22 +9,24 @@ export default function AvatarUpdate() {
   const [selectedImage, setSelectedImage] = useState("");
   const inputRef = useRef<any>(); //CHNL
 
-  const changeAvatar = async () => {
-    // if (selectedImage === "") return console.log("No file selected");
-    const formData = new FormData();
-    formData.append("avatar", selectedImage);
-    axios
-      .post(backURL + "/users/updateavatar", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        if (data.updated) window.location.href = "/";
-      });
-  };
+  //url removed from backend
+
+  // const changeAvatar = async () => {
+  //   // if (selectedImage === "") return console.log("No file selected");
+  //   const formData = new FormData();
+  //   formData.append("avatar", selectedImage);
+  //   axios
+  //     .post(backURL + "/users/updateavatar", formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //       withCredentials: true,
+  //     })
+  //     .then(({ data }) => {
+  //       console.log(data);
+  //       if (data.updated) window.location.href = "/";
+  //     });
+  // };
 
   const deleteAvatar = () => {
     axios
@@ -53,7 +55,7 @@ export default function AvatarUpdate() {
       <button
         className="p-3 m-5 bg-blue-400"
         onClick={() => {
-          changeAvatar();
+          // changeAvatar();
         }}
       >
         Change avatar

@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AccountInfo from "../components/AccountInfo";
 import AvatarUpdate from "../components/AvatarUpdate";
 import { Container } from "../components/Container";
-import { Header } from "../components/Header";
-import { Page } from "../components/Page";
 import PasswordReset from "../components/PasswordReset";
 import Popup from "../components/Popup";
 import PremiumSettings from "../components/PremiumSettings";
@@ -24,7 +22,9 @@ export default function Settings() {
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [name, setName] = useState("");
-  // const [password, setPassword] = useState("");
+
+  const [avatar, setAvatar] = useState("");
+  const avatarRef = useRef<any>();
 
   const [pwPopupShow, setPwPopupShow] = useState(false);
   const editButtonText = (disabled: boolean) => {
@@ -46,6 +46,21 @@ export default function Settings() {
       .then(({ data }) => {
         window.location.href = "/login";
         console.log(data);
+      });
+  };
+
+  const deleteAvatar = () => {
+    axios
+      .post(
+        `${backURL}/users/deleteavatar`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+        window.location.href = "/settings";
       });
   };
 
@@ -72,29 +87,33 @@ export default function Settings() {
   }, []);
 
   //refresh the page after applying
-  const validateInfo = async () => {
+  const updateInfo = async () => {
     if (
       email === originalEmail &&
       name === originalName &&
-      nickname === originalNickname
+      nickname === originalNickname &&
+      avatar === ""
     ) {
       //using the one line if return here doesn't stop axios from sending the request, probably bc its async ?
       return console.log("You haven't changed anything.");
     } else {
+      const updateForm = new FormData();
+      updateForm.append("email", email);
+      updateForm.append("nickname", nickname);
+      updateForm.append("name", name);
+      updateForm.append("avatar", avatar);
       axios
-        .post(
-          backURL + "/users/update",
-          {
-            email,
-            nickname,
-            name,
+        .post(backURL + "/users/update", updateForm, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "Multipart/form-data",
           },
-          {
-            withCredentials: true,
-          }
-        )
+        })
         .then(({ data }) => {
-          if (data.updated === true) return router.push("/");
+          if (data.updated === true) {
+            // return router.push("/");
+            window.location.href = "/";
+          }
           setAlert(data.message ? data.message : "");
         });
     }
@@ -150,6 +169,28 @@ export default function Settings() {
                       </td>
                     </tr>
                     <tr>
+                      <td>Avatar: </td>
+                      <td className="flex">
+                        <input
+                          type={"file"}
+                          disabled={disabled}
+                          ref={avatarRef}
+                          onChange={() => {
+                            setAvatar(avatarRef.current.files[0]);
+                          }}
+                        />
+                        <button
+                          disabled={disabled}
+                          onClick={() => {
+                            deleteAvatar();
+                          }}
+                          className="p-1 bg-red-500 disabled:opacity-50"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
                       <td>Password:</td>
                       <td>
                         <button
@@ -194,7 +235,7 @@ export default function Settings() {
                   <button
                     disabled={disabled}
                     onClick={() => {
-                      validateInfo();
+                      updateInfo();
                     }}
                     className="bg-blue-600 w-1/2 disabled:opacity-50"
                   >
@@ -202,7 +243,7 @@ export default function Settings() {
                   </button>
                 </div>
               </div>
-              <AvatarUpdate />
+              {/* <AvatarUpdate /> */}
             </div>
             <div className="w-full flex justify-end">
               <button
@@ -218,7 +259,8 @@ export default function Settings() {
           <Sidebar>
             {user ? (
               <div>
-                <AccountInfo user={user} /> <PremiumSettings user={user} />
+                <AccountInfo user={user} />
+                <PremiumSettings user={user} />
               </div>
             ) : null}
           </Sidebar>

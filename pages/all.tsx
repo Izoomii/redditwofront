@@ -12,7 +12,7 @@ interface postsProp {
   data: Post[];
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch(backURL + "/posts/all"); //CHNL ??????
   const data = await res.json();
   // console.log(data);

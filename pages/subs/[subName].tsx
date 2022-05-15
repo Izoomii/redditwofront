@@ -31,21 +31,21 @@ interface allSubsProps {
   name: string;
 }
 
-export const getStaticPaths = async () => {
-  const res = await fetch(backURL + "/subs"); //CHNl
-  const data: Promise<allSubsProps[]> = await res.json();
-  const paths = (await data).map((elem) => {
-    return {
-      params: { subName: elem.name },
-    };
-  });
-  return {
-    paths: paths,
-    fallback: false,
-  };
-};
+// export const getStaticPaths = async () => {
+//   const res = await fetch(backURL + "/subs"); //CHNl
+//   const data: Promise<allSubsProps[]> = await res.json();
+//   const paths = (await data).map((elem) => {
+//     return {
+//       params: { subName: elem.name },
+//     };
+//   });
+//   return {
+//     paths: paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps = async (props: any) => {
+export const getServerSideProps = async (props: any) => {
   const subName = props.params.subName;
   const data = await axios
     .get(`${backURL}/subs/${subName}`, {

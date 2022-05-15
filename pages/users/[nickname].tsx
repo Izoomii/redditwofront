@@ -34,28 +34,28 @@ function Account(props: any) {
 }
 
 //staticprops and staticpaths search for all users then the specific user at every refresh, bit inefficient, IMPL
-export const getStaticPaths = async () => {
-  const getUsers = async () => {
-    const users: Promise<NicknameList[]> = axios
-      .get(backURL + "/users/all")
-      .then(({ data }) => {
-        return data;
-      });
-    const paths = (await users).map((elem) => {
-      return {
-        params: { nickname: elem.nickname },
-      };
-    });
-    return paths;
-  };
+// export const getStaticPaths = async () => {
+//   const getUsers = async () => {
+//     const users: Promise<NicknameList[]> = axios
+//       .get(backURL + "/users/all")
+//       .then(({ data }) => {
+//         return data;
+//       });
+//     const paths = (await users).map((elem) => {
+//       return {
+//         params: { nickname: elem.nickname },
+//       };
+//     });
+//     return paths;
+//   };
 
-  return {
-    paths: await getUsers(),
-    fallback: false,
-  };
-};
+//   return {
+//     paths: await getUsers(),
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps = async (props: any) => {
+export const getServerSideProps = async (props: any) => {
   const nickname = props.params.nickname;
   const data = await axios
     .get(backURL + "/users/", {

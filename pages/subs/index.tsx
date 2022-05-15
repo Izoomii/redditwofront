@@ -33,7 +33,7 @@ export default function Subreddits(props: subProps) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const data = await axios.get(backURL + "/subs").then(({ data }) => {
     return data;
   });

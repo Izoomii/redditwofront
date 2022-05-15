@@ -37,23 +37,23 @@ function PostPage(data: postProp) {
   );
 }
 
-export async function getStaticPaths() {
-  const results = await fetch(backURL + "/posts"); //CHNL
-  const data: idList[] = await results.json();
-  console.log(data);
-  const paths = data.map((elem) => {
-    return {
-      params: { id: elem.id.toString() }, //CHNL
-    };
-  });
-  return {
-    paths: paths,
-    fallback: false, // false or 'blocking'
-  };
-}
+// export async function getStaticPaths() {
+//   const results = await fetch(backURL + "/posts"); //CHNL
+//   const data: idList[] = await results.json();
+//   console.log(data);
+//   const paths = data.map((elem) => {
+//     return {
+//       params: { id: elem.id.toString() }, //CHNL
+//     };
+//   });
+//   return {
+//     paths: paths,
+//     fallback: false, // false or 'blocking'
+//   };
+// }
 
 //improve this IMPL
-export async function getStaticProps(props: any) {
+export async function getServerSideProps(props: any) {
   const id = props.params.id;
   const res = await fetch(`${backURL}/posts/${id}`); //CHNL
   const data = await res.json();

@@ -61,15 +61,19 @@ export default function Chats() {
         const chats = data as Ticket[];
         console.log(chats); //logs twice, IMPL
         setChatsList(chats);
+        setCurrentChatId(chats[0].chatId);
       });
   }, [user]);
 
   const updateMessages = () => {
+    if (currentChatId === ("" || null) && chatsList.length > 0)
+      setCurrentChatId(chatsList[0].chatId);
     axios
       .get(`${backURL}/chats/${currentChatId}`, {
         withCredentials: true,
       })
       .then(({ data }) => {
+        // if (currentChatId === ("" || null)) return setMessages([]);
         const messages = data as Message[];
         setMessages(messages);
       });
@@ -83,13 +87,17 @@ export default function Chats() {
     <Container>
       <Main>
         <div>
-          {messages.map((e, i) => {
-            return (
-              <div key={i}>
-                [{e.ownerName}]: {e.content}
-              </div>
-            );
-          })}
+          {messages.length < 1 ? (
+            <div className="italic">nothing here..</div>
+          ) : (
+            messages.map((e, i) => {
+              return (
+                <div key={i}>
+                  [{e.ownerName}]: {e.content}
+                </div>
+              );
+            })
+          )}
         </div>
         <div className="bg-gray-700 text-black p-2">
           <input
@@ -120,7 +128,7 @@ export default function Chats() {
               }}
               className="m-2 p-2 bg-slate-600"
             >
-              {e.chat.name}
+              {e.chat.name === null ? `[UNNAMED CHAT]` : e.chat.name}
             </div>
           );
         })}

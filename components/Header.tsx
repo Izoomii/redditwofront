@@ -67,6 +67,9 @@ export const Header = () => {
       </div>
       <div className="flex h-100 w-1/4 justify-end">
         <div className="grow text-center flex flex-col justify-center">
+          <Link href={"/chats"}>Chats</Link>
+        </div>
+        <div className="grow text-center flex flex-col justify-center">
           <Link
             href={
               nickname === "No user logged in" ? "/login" : "/users/" + nickname

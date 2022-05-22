@@ -29,6 +29,10 @@ export default function Chats() {
       });
   };
 
+  const checkAddedUser = () => {
+    //`${backURL}/auth/${nickname}`
+  };
+
   const sendMessage = () => {
     if (userMessage === "") return console.log("Message empty");
     axios

@@ -44,12 +44,10 @@ export default function Login() {
     if (nickname == "") {
       setAccountCheck("Please fill the nickname section.");
     } else {
-      axios.get<User>(`${backURL}/auth/${nickname}`).then(({ data }) => {
-        if (data.nickname === nickname) {
-          setAccountCheck(`${nickname} exists!`);
-        } else {
-          setAccountCheck(`${nickname} does not exist.`);
-        }
+      axios.get(`${backURL}/auth/${nickname}`).then(({ data }) => {
+        if (data.user === null)
+          return setAccountCheck(`${nickname} doesn't exist`);
+        setAccountCheck(`${nickname} exists!`);
       });
     }
   };

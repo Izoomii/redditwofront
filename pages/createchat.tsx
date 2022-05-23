@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Container } from "../components/Container";
 import { Main } from "../components/Main";
 import { backURL, User } from "../globalVars/globals";
 
@@ -11,6 +12,7 @@ export default function CreateChat() {
 
   const [alert, setAlert] = useState("");
   const [user, setUser] = useState<User | null>(null);
+  const [chatName, setChatName] = useState("");
   const [addedUsers, setAddedUsers] = useState<string[]>([]);
   const checkUser = () => {
     axios
@@ -24,6 +26,7 @@ export default function CreateChat() {
       });
   };
 
+  //makes sure array is valid before sending it to create request
   const validateUsers = async () => {
     //removes empty spaces and duplicates
     const usersArr = addedUsers
@@ -31,7 +34,6 @@ export default function CreateChat() {
       .filter((c, i) => {
         return addedUsers.indexOf(c) === i;
       });
-    console.log(usersArr);
     if (usersArr.length === 0) return setAlert("Please fill this section");
     axios
       .post(
@@ -44,26 +46,38 @@ export default function CreateChat() {
       .then(({ data }) => {
         const valid = data.valid as boolean;
         if (!valid) return setAlert("One or more nicknames are wrong.");
-        const users = data.users as object[];
         setAlert("All good");
+        const users = data.users as object[];
         axios
           .post(
             `${backURL}/chats/createchat`,
-            { participants: users },
+            { participants: users, name: chatName },
             {
               withCredentials: true,
             }
           )
           .then(({ data }) => {
-            console.log(data);
+            setAlert("Chat created!");
           });
       });
   };
 
+  useEffect(() => {
+    checkUser();
+  }, []);
+
   return (
-    <div>
+    <Container>
       <Main>
-        <p>{alert}</p>
+        <div>Give your chat a name:</div>
+        <input
+          value={chatName}
+          onChange={(event) => {
+            setChatName(event.target.value);
+          }}
+          className="text-black"
+        />
+        <div>Add participants:</div>
         <input
           value={addedUsers.join(" ")}
           onChange={(event) => {
@@ -71,6 +85,7 @@ export default function CreateChat() {
           }}
           className="w-full text-black"
         ></input>
+        <p className="text-sm text-red-500">{alert}</p>
         <button
           onClick={() => {
             validateUsers();
@@ -79,6 +94,6 @@ export default function CreateChat() {
           Create chat
         </button>
       </Main>
-    </div>
+    </Container>
   );
 }

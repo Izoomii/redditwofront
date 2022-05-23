@@ -1,4 +1,5 @@
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Container } from "../components/Container";
@@ -27,10 +28,6 @@ export default function Chats() {
         if (user === null) return router.push("/login");
         setUser(user);
       });
-  };
-
-  const checkAddedUser = () => {
-    //`${backURL}/auth/${nickname}`
   };
 
   const sendMessage = () => {
@@ -122,7 +119,12 @@ export default function Chats() {
         </div>
       </Main>
       <Sidebar>
-        Chat list here
+        <div className="flex">
+          <div className="w-1/2">Your chats:</div>
+          <div className="grow bg-gray-600 text-gray-800 italic text-center rounded-md">
+            <Link href={"/createchat"}>Create new chat</Link>
+          </div>
+        </div>
         {chatsList.map((e, i) => {
           return (
             <div
